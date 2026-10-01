@@ -351,6 +351,11 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
 .banner.notice b { display: block; margin-bottom: 2px; }
 .gatebox .betanote { font-size: 13px; color: var(--ink2); background: var(--panel2, rgba(127,127,127,.12)); border-radius: 8px; padding: 6px 10px; }
 
+.apane .guidelist { display: grid; gap: 8px; }
+.apane .gsec { border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 4px 12px; }
+.apane .gsec summary { cursor: pointer; font-weight: 700; min-height: 40px; display: flex; align-items: center; }
+.apane .gsec ul { margin: 0 0 10px; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; line-height: 1.55; }
+
 </style>
 
 <div class="app">
@@ -360,6 +365,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     <button class="btn" id="toggleList" type="button" aria-pressed="false">목록 숨기기</button>
     <button class="btn" id="openMonth" type="button">매출 · 수업</button>
     <button class="btn" id="openSheet" type="button">백업 · 설정</button>
+    <button class="btn" id="openGuide" type="button" hidden>사용법</button>
     <button class="btn" id="openFeedback" type="button" hidden>의견 보내기</button>
     <button class="btn" id="openAdmin" type="button" hidden>관리자</button>
   </header>
@@ -3709,6 +3715,7 @@ SPO.noticeBanner = function () {
   try { if (localStorage.getItem('spo_notice') === NOTICE_ID) return null; } catch (e) {}
   var box = h('div', { class: 'banner notice', role: 'note' },
     h('span', null, h('b', null, NOTICE_TITLE), NOTICE_LINES.map(function (t) { return h('div', null, t); })),
+    h('button', { class: 'btn sm', type: 'button', onClick: function () { SPO.openGuide(); } }, '사용법'),
     h('button', { class: 'btn sm', type: 'button', onClick: function () { SPO.openFeedback(); } }, '의견 보내기'),
     h('button', { class: 'btn sm', type: 'button', onClick: function () { try { localStorage.setItem('spo_notice', NOTICE_ID); } catch (e) {} box.remove(); } }, '닫기'));
   return box;
@@ -3853,7 +3860,7 @@ async function proceed() {
   gateEl.hidden = true;
   window.__cloudPath = function (uid) { return 'users/' + uid + '/notes'; };
   startCloud(dbf, me.uid);
-  $('#openFeedback').hidden = false; $('#openAdmin').hidden = !isAdmin;
+  $('#openFeedback').hidden = false; $('#openGuide').hidden = false; $('#openAdmin').hidden = !isAdmin;
   dbf.doc('profiles/' + me.uid).set({ lastSeen: Date.now() }, { merge: true }).catch(function () {});
   renderAll();
 }
@@ -3862,7 +3869,7 @@ function initStandalone() {
   try { FB.initializeApp(CFG); auth = FB.auth(); dbf = FB.firestore(); } catch (e) { startLocal(); return; }
   renderAll();
   auth.onAuthStateChanged(function (u) {
-    if (!u) { flushAll(); flushTrack(); stopCloud(); me = null; myProfile = null; isAdmin = false; $('#openFeedback').hidden = true; $('#openAdmin').hidden = true; renderAll(); gate('login'); return; }
+    if (!u) { flushAll(); flushTrack(); stopCloud(); me = null; myProfile = null; isAdmin = false; $('#openFeedback').hidden = true; $('#openGuide').hidden = true; $('#openAdmin').hidden = true; renderAll(); gate('login'); return; }
     onUser(u);
   });
 }
@@ -3902,6 +3909,40 @@ SPO.openFeedback = function () {
     h('div', { class: 'ahead' }, h('h2', null, '의견 보내기'), h('button', { class: 'btn', type: 'button', onClick: function () { fbEl.hidden = true; } }, '닫기')),
     h('div', { class: 'muted' }, '회원의 이름이나 개인 정보는 적지 마세요.'), chipRow, ta, msg, h('div', null, send)));
   fbEl.hidden = false;
+};
+
+
+/* ---------- 사용법 ---------- */
+var GUIDE = [
+  ['처음 시작하기', ['위쪽 ‘+ 회원’을 눌러 이름을 적고 **OT로 추가**(상담·체험 단계) 또는 **PT로 추가**(등록한 회원)를 골라요.', '처음이라 감이 안 오면 ‘예시 회원으로 둘러보기’로 가짜 회원을 열어 볼 수 있어요. 눌러 보고 지워도 돼요.', '회원 이름은 실명 대신 별칭·이니셜을 써도 돼요.']],
+  ['PT 회원 화면 (탭 6개)', ['**프로필 · 목표**: 기본 정보, 병력·통증, 운동 목표(설정일 자동 입력)', '**프로그램**: 블록(기간)별 운동 계획', '**수업 일지**: 회차마다 운동·중량·횟수·세트·피드백 기록', '**변화**: 몸(인바디·눈바디) · 운동 · 주간 로그 · 월간 보고', '**OT 기록**: OT 때 적은 내용 확인', '**등록 · 결제**: 등록, 결제, 서비스 PT, 1회 수업 단가']],
+  ['수업 일지 쓰기', ['회차를 만들고 운동 이름, 중량, 횟수, 세트를 적어요. 운동 이름은 띄어쓰기와 상관없이 같은 운동으로 묶여요.', '‘지난 기록’을 누르면 그 운동의 이전 기록을 팝업으로 보면서 쓸 수 있어요. 검색도 돼요.', '‘수업 카드(사진)’로 오늘 수업을 이미지로 만들어 카톡으로 보낼 수 있어요.']],
+  ['변화 보기', ['**몸**: 인바디를 입력하면 체중·골격근량·체지방 변화와 그래프가 나와요.', '**운동**: 운동별 중량·세트·횟수 추이를 봐요.', '**주간 로그**: 한 주의 수업을 지난주와 비교해 정리해요.', '**월간 보고**: 회차 범위(예: 1~12회)를 정해 보고서를 만들어요. 총평과 다음 목표를 적을 수 있어요.', '지난 기록보다 달라진 부분은 **노란 형광펜**으로 자동 표시돼요. 🖍를 눌러 직접 켜고 끌 수도 있어요.']],
+  ['PDF · 텍스트로 내보내기', ['대부분의 탭 위에 **PDF로 저장**(회원에게 카톡·인쇄용)과 **텍스트 복사**(Claude에 붙여넣어 프로그램을 만들 때)가 있어요.', '프로필 PDF에는 병력·통증·복용 약·메모가 빠져 있어서 회원에게 보내도 안전해요.']],
+  ['OT 회원 (체험·상담)', ['순서: **상담 · 프로필 → 평가 → OT 수업 → 후속 연락 → 리포트**', '**평가**에는 움직임 평가, 자세 평가, 인바디, 1RM(간접 측정)을 입력해요.', '등록이 정해지면 **PT 회원으로 전환하기**를 눌러요. 프로필, 인바디, OT 수업 기록이 모두 그대로 이어져요.']],
+  ['매출 · 수업', ['위쪽 **매출 · 수업**에서 이번 달 수업 수, 매출, OT 전환율을 한눈에 봐요.']],
+  ['백업 · 로그아웃', ['**백업 · 설정 → 백업 파일 저장**으로 내 회원 기록을 파일로 받아 둬요. **주 1회**를 권장해요.', '백업 파일은 같은 화면의 ‘백업 가져오기’로 다시 불러올 수 있어요.', '**로그아웃**과, 운영자가 내 기록을 열람한 기록도 이 화면에서 볼 수 있어요.']],
+  ['불편하거나 오류가 났어요', ['위쪽 **의견 보내기**로 적어 주세요. 회원 이름이나 개인정보는 적지 마세요.', '화면이 안 바뀌면 새로고침(아이폰은 앱을 닫았다 열기)을 해 보세요.']]
+];
+function guideLine(t) {
+  var parts = String(t).split('**'), out = [];
+  parts.forEach(function (x, i) { out.push(i % 2 ? h('b', null, x) : x); });
+  return h('li', null, out);
+}
+var guEl = h('div', { class: 'apane', hidden: true });
+document.body.append(guEl);
+SPO.openGuide = function () {
+  var list = h('div', { class: 'guidelist' });
+  GUIDE.forEach(function (g, i) {
+    var d = h('details', { class: 'gsec' }, h('summary', null, g[0]), h('ul', null, g[1].map(guideLine)));
+    if (i === 0) d.open = true;
+    list.append(d);
+  });
+  guEl.replaceChildren(h('div', { class: 'abox' },
+    h('div', { class: 'ahead' }, h('h2', null, '사용법'), h('button', { class: 'btn', type: 'button', onClick: function () { guEl.hidden = true; } }, '닫기')),
+    h('div', { class: 'muted' }, '제목을 누르면 펼쳐져요. 베타라서 바뀌는 부분이 있을 수 있어요.'), list,
+    h('div', null, h('button', { class: 'btn', type: 'button', onClick: function () { guEl.hidden = true; SPO.openFeedback(); } }, '의견 보내기'))));
+  guEl.hidden = false;
 };
 
 /* ---------- admin ---------- */
@@ -3975,6 +4016,7 @@ function exitView() {
   startCloud(dbf, me.uid); renderAll();
 }
 $('#openFeedback').addEventListener('click', function () { SPO.openFeedback(); });
+$('#openGuide').addEventListener('click', function () { SPO.openGuide(); });
 $('#openAdmin').addEventListener('click', function () { SPO.openAdmin(); });
 
   initStandalone();
