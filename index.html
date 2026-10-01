@@ -347,6 +347,10 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
 .gatebox .chk2 input { width: 20px; height: 20px; flex: none; margin-top: 1px; }
 .gatebox .chk2 small { display: block; color: var(--ink2); font-size: 12px; margin-top: 1px; }
 
+.banner.notice { background: var(--accent-soft, var(--panel2, #eef5f2)); color: var(--ink, inherit); line-height: 1.5; }
+.banner.notice b { display: block; margin-bottom: 2px; }
+.gatebox .betanote { font-size: 13px; color: var(--ink2); background: var(--panel2, rgba(127,127,127,.12)); border-radius: 8px; padding: 6px 10px; }
+
 </style>
 
 <div class="app">
@@ -3526,6 +3530,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     var b = $('#banner');
     b.replaceChildren();
     if (!state.loaded) return;
+    if (window.SPO && SPO.noticeBanner) { var nb = SPO.noticeBanner(); if (nb) b.append(nb); }
     if (state.status === 'error' && state.errMsg) b.append(h('div', { class: 'banner err' }, h('span', null, state.errMsg)));
     if (state.mode === 'local') b.append(h('div', { class: 'banner' }, h('span', null, '지금은 이 브라우저에만 저장돼요. 브라우저 데이터를 지우면 사라지니 백업을 자주 해 주세요.')));
     if (Object.keys(state.members).length) {
@@ -3693,6 +3698,21 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
 var CFG = window.SPO_FIREBASE, FB = window.firebase;
 var CONSENT_VER = '2026-10-01', APP_VER = '2026-10-01', APP_NAME = '스포차트';
 var SPO = window.SPO = {};
+/* 공지: 문구를 바꾸고 NOTICE_ID를 새 값으로 바꾸면, 닫았던 사람에게도 다시 보여요. */
+var NOTICE_ID = 'beta-1';
+var NOTICE_TITLE = '베타 버전이에요';
+var NOTICE_LINES = [
+  '불편한 점이나 바라는 기능은 위쪽 [의견 보내기]로 보내 주세요.',
+  '정식 출시 후, 베타에 참여해 의견을 주신 분들께는 평생 무료 이용 혜택을 드릴 예정이에요.'
+];
+SPO.noticeBanner = function () {
+  try { if (localStorage.getItem('spo_notice') === NOTICE_ID) return null; } catch (e) {}
+  var box = h('div', { class: 'banner notice', role: 'note' },
+    h('span', null, h('b', null, NOTICE_TITLE), NOTICE_LINES.map(function (t) { return h('div', null, t); })),
+    h('button', { class: 'btn sm', type: 'button', onClick: function () { SPO.openFeedback(); } }, '의견 보내기'),
+    h('button', { class: 'btn sm', type: 'button', onClick: function () { try { localStorage.setItem('spo_notice', NOTICE_ID); } catch (e) {} box.remove(); } }, '닫기'));
+  return box;
+};
 var dbf = null, auth = null, me = null, myProfile = null, isAdmin = false, statsOK = false;
 var TAB_LABELS = { profile: '프로필·목표', program: '프로그램', records: '수업 일지', change: '변화', weeks: '주간 로그', report: '월간 보고', ot: 'OT 기록', contracts: '등록·결제', otc: 'OT 상담', ota: 'OT 평가', otl: 'OT 수업', otf: 'OT 후속연락', otr: 'OT 리포트' };
 var FEAT_LABELS = { 'export_pdf': 'PDF 저장', 'lesson_card': '수업 카드', 'history_popup': '지난 기록 팝업', 'member_add_active': 'PT 회원 추가', 'member_add_ot': 'OT 회원 추가', 'ot_convert': 'OT→PT 전환' };
@@ -3779,6 +3799,7 @@ function gate(mode, note) {
   if (mode === 'consent') { consentScreen(); return; }
   gateShow([
     h('h1', null, APP_NAME),
+    h('div', { class: 'betanote' }, h('b', null, NOTICE_TITLE), ' · 불편한 점은 로그인 후 [의견 보내기]로 알려 주세요.'),
     h('div', { class: 'sub' }, mode === 'signup' ? '트레이너를 위한 회원 관리 노트예요. 이메일로 가입하면 폰과 PC 어디서나 같은 기록을 볼 수 있어요.' : '로그인해서 내 회원 기록을 불러와요.'),
     emailPw(mode, note)]);
 }
