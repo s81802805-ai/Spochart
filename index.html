@@ -342,6 +342,11 @@ table.grid td.r, table.grid th.r { text-align: right; }
 body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointer-events: none; }
 .fbchips { display: flex; gap: 6px; flex-wrap: wrap; }
 
+.gatebox .loginopts { display: flex; flex-direction: column; gap: 6px; margin: 2px 0; }
+.gatebox .chk2 { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.4; min-height: 36px; padding: 4px 2px; cursor: pointer; }
+.gatebox .chk2 input { width: 20px; height: 20px; flex: none; margin-top: 1px; }
+.gatebox .chk2 small { display: block; color: var(--ink2); font-size: 12px; margin-top: 1px; }
+
 </style>
 
 <div class="app">
@@ -3733,6 +3738,14 @@ function emailPw(mode, note) {
   var pw = h('input', { class: 'in', type: 'password', placeholder: mode === 'signup' ? '비밀번호 (6자 이상)' : '비밀번호', autocomplete: mode === 'signup' ? 'new-password' : 'current-password', 'aria-label': '비밀번호' });
   var pw2 = mode === 'signup' ? h('input', { class: 'in', type: 'password', placeholder: '비밀번호 한 번 더', autocomplete: 'new-password', 'aria-label': '비밀번호 확인' }) : null;
   var go = h('button', { class: 'btn primary big', type: 'button' }, mode === 'signup' ? '가입하기' : '로그인');
+  var savedEm = ''; try { savedEm = localStorage.getItem('spo_email') || ''; } catch (e0) {}
+  var keepIn = null, saveEm = null;
+  if (mode === 'login') {
+    if (savedEm) em.value = savedEm;
+    var keepOn = true; try { keepOn = localStorage.getItem('spo_keep') !== '0'; } catch (e1) {}
+    keepIn = h('input', { type: 'checkbox', id: 'spoKeep', checked: keepOn });
+    saveEm = h('input', { type: 'checkbox', id: 'spoSaveEm', checked: !!savedEm });
+  }
   async function submit() {
     err.textContent = ''; okm.textContent = '';
     var e1 = em.value.trim(), p1 = pw.value;
@@ -3740,6 +3753,11 @@ function emailPw(mode, note) {
     if (pw2 && p1 !== pw2.value) { err.textContent = '비밀번호가 서로 달라요.'; return; }
     go.disabled = true; var old = go.textContent; go.textContent = '잠시만요…';
     try {
+      var keep = keepIn ? keepIn.checked : true;
+      try { if (auth.setPersistence) await auth.setPersistence(keep ? FB.auth.Auth.Persistence.LOCAL : FB.auth.Auth.Persistence.SESSION); } catch (e2) {}
+      try {
+        if (mode === 'login') { localStorage.setItem('spo_keep', keep ? '1' : '0'); if (saveEm && saveEm.checked) localStorage.setItem('spo_email', e1); else localStorage.removeItem('spo_email'); }
+      } catch (e3) {}
       if (mode === 'signup') await auth.createUserWithEmailAndPassword(e1, p1);
       else await auth.signInWithEmailAndPassword(e1, p1);
     } catch (e) { err.textContent = authMsg(e); go.disabled = false; go.textContent = old; }
@@ -3752,7 +3770,10 @@ function emailPw(mode, note) {
     try { await auth.sendPasswordResetEmail(em.value.trim()); okm.textContent = '비밀번호 재설정 메일을 보냈어요. 메일함을 확인해 주세요.'; } catch (e) { err.textContent = authMsg(e); }
   } }, '비밀번호를 잊으셨나요?') : null;
   var sw = h('button', { class: 'linkbtn', type: 'button', onClick: function () { gate(mode === 'login' ? 'signup' : 'login'); } }, mode === 'login' ? '처음이신가요? 가입하기' : '이미 계정이 있어요 · 로그인');
-  return [em, pw, pw2, go, err, okm, reset, sw];
+  var opts = mode === 'login' ? h('div', { class: 'loginopts' },
+    h('label', { class: 'chk2', for: 'spoKeep' }, keepIn, h('span', null, '로그인 상태 유지 ', h('small', null, '내 폰·PC에서만 켜 두세요. 공용 기기에서는 끄세요.'))),
+    h('label', { class: 'chk2', for: 'spoSaveEm' }, saveEm, h('span', null, '이메일 저장'))) : null;
+  return [em, pw, pw2, opts, go, err, okm, reset, sw];
 }
 function gate(mode, note) {
   if (mode === 'consent') { consentScreen(); return; }
