@@ -1901,10 +1901,106 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
 
   function recordsTab(m) { return logView(m); }
+  /* ---------- 주간 · 월간 변화: 선택한 기간과 그 직전 기록을 비교 ---------- */
+  function perRange(mode, key) {
+    if (mode === 'week') return { s: key, e: addDays(key, 6), label: rangeText(key) };
+    var y = +key.slice(0, 4), mo = +key.slice(5, 7), nx = mo === 12 ? (y + 1) + '-01-01' : y + '-' + pad(mo + 1) + '-01';
+    return { s: key + '-01', e: addDays(nx, -1), label: y + '년 ' + mo + '월' };
+  }
+  function perShift(mode, key, n) {
+    if (mode === 'week') return addDays(key, 7 * n);
+    var d = new Date(+key.slice(0, 4), +key.slice(5, 7) - 1 + n, 1); return d.getFullYear() + '-' + pad(d.getMonth() + 1);
+  }
+  function perKeyOf(mode, date) { return mode === 'week' ? mondayOf(date) : date.slice(0, 7); }
+  function perFirst(m, mode) {
+    var ds = [];
+    m.sessions.forEach(function (x) { if (x.date) ds.push(x.date); });
+    m.body.forEach(function (r) { if (r.date) ds.push(r.date); });
+    ds.sort();
+    return ds.length ? perKeyOf(mode, ds[0]) : perKeyOf(mode, today());
+  }
+  function perData(m, mode, key) {
+    var R = perRange(mode, key), D = { r: R, body: [], lifts: [], n: 0 };
+    D.n = m.sessions.filter(function (x) { return x.date && x.date >= R.s && x.date <= R.e; }).length;
+    BODY_METRICS.forEach(function (x) {
+      var rows = m.body.filter(function (r) { return r.date && isFinite(num(r[x[0]])); }).sort(byDate);
+      var cur = rows.filter(function (r) { return r.date >= R.s && r.date <= R.e; }).pop();
+      if (!cur) return;
+      var pv = rows.filter(function (r) { return r.date < R.s; }).pop();
+      D.body.push({ label: x[1], unit: x[2], cur: num(cur[x[0]]), curD: cur.date, pv: pv ? num(pv[x[0]]) : NaN, pvD: pv ? pv.date : '', diff: pv ? num(cur[x[0]]) - num(pv[x[0]]) : NaN });
+    });
+    var all = flatItems(m), inP = all.filter(function (r) { return r.date && r.date >= R.s && r.date <= R.e; }), before = all.filter(function (r) { return r.date && r.date < R.s; });
+    D.lifts = exGroups(inP).sort(function (a, b) { return a.name.localeCompare(b.name, 'ko'); }).map(function (g) {
+      var top = g.rows.reduce(function (best, r) { return !best || num(r.load) > num(best.load) || !isFinite(num(best.load)) ? r : best; }, null);
+      var pr = before.filter(function (r) { return exKey(r.ex) === g.key; }).sort(byDateNo), pv = pr[pr.length - 1];
+      var d = pv && isFinite(num(top.load)) && isFinite(num(pv.load)) ? num(top.load) - num(pv.load) : NaN;
+      var fbs = []; g.rows.forEach(function (r) { if (r.fb && fbs.indexOf(r.fb) < 0) fbs.push(r.fb); });
+      return { name: g.name, key: g.key, part: g.part, times: Object.keys(g.dates).length, prev: pv ? fmtSet(pv) + ' (' + fmtShort(pv.date) + ')' : '–', now: fmtSet(top), diff: d, isNew: !pv, fb: fbs.join(' / '), auto: !pv || (isFinite(d) && d > 0) };
+    });
+    D.body.forEach(function (b) { b.auto = isFinite(b.diff) && b.diff !== 0; });
+    return D;
+  }
+  function perDiffTxt(b) { return isNaN(b.diff) ? '비교할 이전 기록 없음' : (b.diff === 0 ? '변화 없음' : signed(b.diff) + b.unit); }
+  function perLiftTxt(l) { return l.isNew ? '신규' : isNaN(l.diff) ? '–' : (l.diff === 0 ? '변화 없음' : signed(l.diff) + 'kg'); }
+  function perView(m, mode) {
+    var box = h('div'), nowK = perKeyOf(mode, today()), first = perFirst(m, mode);
+    state.perSel = state.perSel || {};
+    var sk = m.id + ':' + mode, K = state.perSel[sk] || nowK;
+    if (K > nowK) K = nowK; if (K < first) K = first;
+    state.perSel[sk] = K;
+    var D = perData(m, mode, K), unit = mode === 'week' ? '주' : '달', H = hlState(m);
+    function go(n) { state.perSel[sk] = perShift(mode, K, n); renderDetail(); }
+    box.append(h('div', { class: 'sesnav' },
+      h('button', { class: 'btn sm', type: 'button', disabled: K <= first, onClick: function () { go(-1); } }, '◀ 이전 ' + unit),
+      h('span', { class: 'sescur' }, D.r.label + (K === nowK ? ' (이번 ' + unit + ')' : '')),
+      h('button', { class: 'btn sm', type: 'button', disabled: K >= nowK, onClick: function () { go(1); } }, '다음 ' + unit + ' ▶')));
+    box.append(card((mode === 'week' ? '주간' : '월간') + ' 요약', '이 기간 수업 ' + D.n + '회 · 기록이 있는 운동 ' + D.lifts.length + '개 · 인바디 ' + D.body.length + '항목. 바로 이전 기록과 비교해요.'));
+    var bt;
+    if (!D.body.length) bt = h('div', { class: 'muted' }, '이 기간에 입력한 인바디 기록이 없어요.');
+    else bt = h('div', { class: 'tblwrap' }, h('table', { class: 'grid', style: 'min-width:520px' },
+      h('thead', null, h('tr', null, ['항목', '이전', '이 기간', '변화'].map(function (t) { return h('th', null, t); }))),
+      h('tbody', null, D.body.map(function (b) {
+        var tr = h('tr', { class: H.auto && b.auto ? 'hl' : '' });
+        tr.append(h('td', { class: 'txt' }, b.label + (b.unit ? '(' + b.unit + ')' : '')), h('td', { class: 'txt' }, isNaN(b.pv) ? '–' : fmtN(b.pv) + ' (' + fmtShort(b.pvD) + ')'),
+          h('td', { class: 'txt' }, fmtN(b.cur) + ' (' + fmtShort(b.curD) + ')'), h('td', { class: 'txt' }, perDiffTxt(b)));
+        return tr;
+      }))));
+    box.append(card('몸 변화 (인바디)', null, bt));
+    var lt;
+    if (!D.lifts.length) lt = h('div', { class: 'muted' }, '이 기간에 수업 일지에 적은 운동이 없어요.');
+    else lt = h('div', { class: 'tblwrap' }, h('table', { class: 'grid', style: 'min-width:640px' },
+      h('thead', null, h('tr', null, ['부위', '운동', '횟수', '이전 기록', '이 기간(최고 중량)', '변화', '피드백'].map(function (t) { return h('th', null, t); }))),
+      h('tbody', null, D.lifts.map(function (l) {
+        var tr = h('tr', { class: H.auto && l.auto ? 'hl' : '' });
+        tr.append(h('td', { class: 'txt' }, l.part || ''), h('td', { class: 'txt' }, l.name), h('td', { class: 'txt' }, l.times + '회'), h('td', { class: 'txt' }, l.prev),
+          h('td', { class: 'txt' }, l.now), h('td', { class: 'txt' }, perLiftTxt(l)), h('td', { class: 'txt' }, l.fb));
+        return tr;
+      }))));
+    box.append(card('운동 변화', '이 기간에 한 운동의 최고 중량을, 그 전에 한 마지막 기록과 비교해요. 노란 줄은 달라진 부분이에요.', lt));
+    return box;
+  }
+  function docPeriod(m, mode) {
+    var K = (state.perSel && state.perSel[m.id + ':' + mode]) || perKeyOf(mode, today()), D = perData(m, mode, K), B = [], H = hlState(m);
+    if (!D.body.length && !D.lifts.length) return null;
+    var nm = mode === 'week' ? '주간' : '월간';
+    B.push({ t: 'h1', text: nm + ' 요약' });
+    B.push({ t: 'kv', rows: kvRows([['기간', D.r.label + ' (' + fmtD(D.r.s) + ' ~ ' + fmtD(D.r.e) + ')'], ['수업', D.n + '회']]) });
+    if (D.body.length) {
+      B.push({ t: 'h1', text: '몸 변화' });
+      B.push({ t: 'table', head: ['항목', '이전', '이 기간', '변화'], rows: D.body.map(function (b) { return [b.label + (b.unit ? '(' + b.unit + ')' : ''), isNaN(b.pv) ? '–' : fmtN(b.pv) + ' (' + fmtD(b.pvD) + ')', fmtN(b.cur) + ' (' + fmtD(b.curD) + ')', perDiffTxt(b)]; }), hl: D.body.map(function (b) { return !!(H.auto && b.auto); }), w: [1.4, 1.6, 1.6, 1.2] });
+    }
+    if (D.lifts.length) {
+      B.push({ t: 'h1', text: '운동 변화' });
+      B.push({ t: 'table', head: ['부위', '운동', '횟수', '이전 기록', '이 기간(최고 중량)', '변화', '피드백'], rows: D.lifts.map(function (l) { return [l.part || '', l.name, l.times + '회', l.prev, l.now, perLiftTxt(l), l.fb]; }), hl: D.lifts.map(function (l) { return !!(H.auto && l.auto); }), w: [1.1, 1.8, 0.9, 2, 2, 1, 2] });
+    }
+    hlLegend(B);
+    return { title: (m.name || '회원') + ' · ' + nm + ' 변화 (' + D.r.label + ')', label: nm + '변화_' + K, blocks: B };
+  }
+
   function changeTab(m) {
     var box = h('div');
-    box.append(chips([['body', '몸 (인바디 · 눈바디)'], ['exercise', '운동 (중량 · 세트 · 횟수)']], state.chView, function (k) { state.chView = k; renderDetail(); }));
-    box.append(state.chView === 'exercise' ? trendView(m) : bodyTab(m));
+    box.append(chips([['body', '몸 (인바디 · 눈바디)'], ['exercise', '운동 (중량 · 세트 · 횟수)'], ['week', '주간 변화'], ['month', '월간 변화']], state.chView, function (k) { state.chView = k; renderDetail(); }));
+    box.append(state.chView === 'exercise' ? trendView(m) : (state.chView === 'week' || state.chView === 'month') ? perView(m, state.chView) : bodyTab(m));
     return box;
   }
 
@@ -3170,7 +3266,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     var d = state.tab === 'profile' ? docProfile(m, state.expInternal)
       : state.tab === 'program' ? docProgram(m)
       : state.tab === 'records' ? docSessions(m, all)
-      : state.tab === 'change' ? (state.chView === 'exercise' ? docExercises(m) : docBody(m))
+      : state.tab === 'change' ? (state.chView === 'exercise' ? docExercises(m) : (state.chView === 'week' || state.chView === 'month') ? docPeriod(m, state.chView) : docBody(m))
       : state.tab === 'report' ? docReport(m)
       : state.tab === 'ot' || state.tab === 'otr' ? docOt(m)
       : docWeeks(m, all);
