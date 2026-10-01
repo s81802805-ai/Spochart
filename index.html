@@ -47,7 +47,7 @@ h2, h3, h4 { margin: 0; }
 
 .app { max-width: 1360px; margin: 0 auto; padding-inline: 16px; padding-block: 10px 72px; }
 .topbar { display: flex; align-items: center; gap: 10px; padding-block: 6px 12px; flex-wrap: wrap; }
-.brand { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-right: auto; }
+.brand { cursor: pointer; -webkit-tap-highlight-color: transparent; font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-right: auto; }
 .pill { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 6px 14px; min-height: 38px; font-size: 13px; color: var(--ink2); }
 .pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ink3); }
 .pill.ok::before { background: var(--accent); }
@@ -360,7 +360,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
 
 <div class="app">
   <header class="topbar">
-    <div class="brand">스포차트</div>
+    <div class="brand" id="brand" role="button" tabindex="0" title="처음 화면으로">스포차트</div>
     <button class="pill warn" id="status" type="button">연결 중…</button>
     <button class="btn" id="toggleList" type="button" aria-pressed="false">목록 숨기기</button>
     <button class="btn" id="openMonth" type="button">매출 · 수업</button>
@@ -3684,6 +3684,13 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     renderList(); renderDetail(); window.scrollTo(0, 0);
   });
   $('#openSheet').addEventListener('click', function () { state.sheet = true; renderSheet(); });
+  function goHome() {
+    state.sheet = false; state.sel = null; state.view = 'list'; state.addBlock = false; state.addSes = false; state.adding = false;
+    $('#layout').dataset.view = 'list';
+    renderAddForm(); renderList(); renderDetail(); renderSheet(); window.scrollTo(0, 0);
+  }
+  $('#brand').addEventListener('click', goHome);
+  $('#brand').addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goHome(); } });
   $('#addBtn').addEventListener('click', function () { state.adding = !state.adding; renderAddForm(); });
   $('#search').addEventListener('input', function (e) { state.q = e.target.value; renderList(); });
 
