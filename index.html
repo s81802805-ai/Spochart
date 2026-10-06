@@ -9,29 +9,22 @@
    Color: cool neutrals tinted toward green, one deep-green accent, amber for cautions.
    Type: Noto Sans KR, three weights, tabular numbers in grids. */
 :root {
-  --bg: #f2f5f4;
+  --bg: #f3f5f7;
   --panel: #ffffff;
-  --field: #f7f9f9; --hlbg: #fff3a6; --hlbd: #e5c93a;
-  --ink: #15232b;
-  --ink2: #4f626b;
-  --ink3: #8497a0;
-  --line: #d9e2e5;
-  --line2: #e8eef0;
-  --accent: #1c6b5a;
+  --field: #f6f8fa; --hlbg: #fff1b3; --hlbd: #ead27a;
+  --ink: #18212b;
+  --ink2: #5b6672;
+  --ink3: #8a94a0;
+  --line: #e4e8ec;
+  --line2: #eef1f4;
+  --accent: #0e9f8e;
   --accent-ink: #ffffff;
-  --accent-soft: #e3efeb;
-  --focus: #2a8e78;
+  --accent-soft: #e2f5f2;
+  --focus: #0a7a6d;
   --warn: #a8630f;
   --warn-soft: #fbf0df;
   --danger: #b3382c;
   --font: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e1719; --panel: #152124; --field: #111c1f; --ink: #e5eef0; --ink2: #a4b5bb; --ink3: #6f838a; --hlbg: #4a4210; --hlbd: #b39b1c;
-    --line: #26373c; --line2: #1d2c30; --accent: #4db39b; --accent-ink: #06211b; --accent-soft: #17322c;
-    --focus: #4db39b; --warn: #e0a052; --warn-soft: #33260f; --danger: #f0857a; color-scheme: dark;
-  }
 }
 :root[data-theme="dark"] {
   --bg: #0e1719; --panel: #152124; --field: #111c1f; --ink: #e5eef0; --ink2: #a4b5bb; --ink3: #6f838a; --hlbg: #4a4210; --hlbd: #b39b1c;
@@ -86,7 +79,7 @@ h2, h3, h4 { margin: 0; }
 .addform { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
 .addform .in { flex: 1 1 100%; min-width: 0; }
 .addform .btn { flex: 1 1 auto; }
-.mitem { display: block; width: 100%; text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+.mitem { display: block; width: 100%; text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; }
 .mitem.on { background: var(--accent-soft); border-color: var(--accent); }
 .mname { font-weight: 700; }
 .mgoal { color: var(--ink2); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -131,11 +124,24 @@ h2, h3, h4 { margin: 0; }
 .exwrap { margin-bottom: 14px; }
 .exbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .exbar .chips { margin: 0; }
+.exbar { justify-content: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--line2); margin-bottom: 4px; }
+.exmenu { position: relative; margin-left: auto; }
+.exmenu > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; }
+.exmenu > summary::-webkit-details-marker { display: none; }
+.exmenu[open] > summary { border-color: var(--ink3); }
+.exlist { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 230px; max-width: min(320px, 86vw); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 8px 24px rgba(20,30,40,.14); display: grid; gap: 2px; }
+.exitem { text-align: left; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 8px; background: none; font-weight: 500; }
+.exitem:hover { background: var(--field); }
+.exnote { padding: 8px 12px 6px; font-size: 12px; color: var(--ink2); border-top: 1px solid var(--line2); margin-top: 4px; line-height: 1.5; }
+.seg { display: flex; gap: 2px; background: var(--line2); border-radius: 12px; padding: 4px; margin: 0 0 14px; overflow-x: auto; }
+.segbtn { flex: 1 1 auto; min-height: 40px; padding: 6px 16px; border: 0; border-radius: 9px; background: transparent; font-weight: 500; color: var(--ink2); white-space: nowrap; }
+.segbtn.on { background: var(--panel); color: var(--ink); font-weight: 700; box-shadow: 0 1px 3px rgba(20,30,40,.14); }
+.segbtn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .chip.sm { min-height: 32px; padding: 3px 12px; font-size: 13px; }
 .exhint { margin-top: 6px; font-size: 12px; }
 .mtab:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
-.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; }
 .card > h3 { font-size: 15px; margin-bottom: 4px; }
 .card > .muted { margin-bottom: 10px; }
 .card h3 + .fgrid, .card h3 + .tblwrap { margin-top: 10px; }
@@ -145,9 +151,9 @@ h2, h3, h4 { margin: 0; }
 
 .dhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
 .dhead .in.title { flex: 1; min-width: 160px; font-size: 20px; font-weight: 700; padding: 8px 10px; }
-.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin: 10px 0 14px; overflow-x: auto; }
-.tab { padding: 10px 16px; min-height: 44px; border: 0; border-bottom: 3px solid transparent; background: none; font-weight: 500; color: var(--ink2); white-space: nowrap; }
-.tab.on { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+.tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--line); margin: 10px 0 14px; overflow-x: auto; }
+.tab { padding: 10px 14px; min-height: 46px; font-size: 15px; border: 0; border-bottom: 3px solid transparent; background: none; font-weight: 500; color: var(--ink2); white-space: nowrap; }
+.tab.on { color: var(--ink); border-bottom-color: var(--accent); font-weight: 700; }
 
 .fgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
 .f { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
@@ -241,8 +247,156 @@ table.grid tr.hl td { background: var(--hlbg); }
 .sesnav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .sescur { font-weight: 700; min-width: 96px; text-align: center; font-variant-numeric: tabular-nums; }
 .sgroup { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); padding: 0 12px; margin-bottom: 8px; }
-.sgroup summary { color: var(--ink); font-weight: 700; }
+.sgroup summary { color: var(--ink); font-weight: 700; justify-content: space-between; gap: 10px; min-height: 48px; }
+.sgroup summary::after { content: "펼치기 ▾"; font-size: 12px; font-weight: 500; color: var(--accent); white-space: nowrap; }
+.sgroup[open] summary::after { content: "접기 ▴"; color: var(--ink3); }
+.sgroup[open] > summary { border-bottom: 1px solid var(--line2); margin-bottom: 10px; }
+.grouphint { margin: 2px 0 8px; font-size: 12px; color: var(--ink2); }
 .sgroup .chips { margin: 0 0 10px; }
+.cbar { border: 1px solid var(--line); border-left: 4px solid var(--warn); background: var(--warn-soft); border-radius: 10px; margin-bottom: 10px; }
+.cbar.empty { background: var(--panel); border-left-color: var(--line); }
+.cbar summary, .carry summary, .pmemo summary { cursor: pointer; padding: 10px 12px; min-height: 44px; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; list-style: none; }
+.cbar summary::-webkit-details-marker, .carry summary::-webkit-details-marker, .pmemo summary::-webkit-details-marker { display: none; }
+.cbar summary::after, .carry summary::after, .pmemo summary::after { content: "펼치기 ▾"; margin-left: auto; font-size: 12px; font-weight: 500; color: var(--accent); white-space: nowrap; }
+.cbar[open] summary::after, .carry[open] summary::after, .pmemo[open] summary::after { content: "접기 ▴"; }
+.cbar summary { color: var(--warn); }
+.cbar.empty summary { color: var(--ink2); }
+.cbody { padding: 0 12px 12px; display: grid; gap: 8px; }
+.carry { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 10px; margin-bottom: 10px; }
+.carry summary { color: var(--ink); }
+.pmemo { margin-top: 8px; border: 1px dashed var(--line); border-radius: 8px; background: var(--field); }
+.pmemo summary { min-height: 38px; color: var(--ink2); font-weight: 500; }
+.pm { display: grid; gap: 2px; font-size: 13px; padding: 6px 0; border-top: 1px solid var(--line2); }
+.pm:first-child { border-top: 0; }
+.pm span { white-space: pre-wrap; }
+.todo { display: flex; align-items: flex-start; gap: 10px; padding: 8px 4px; min-height: 40px; cursor: pointer; }
+.todo input { width: 20px; height: 20px; margin-top: 1px; flex: none; }
+.todo .ttxt { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.todo .tsrc { white-space: nowrap; }
+.todo.done .ttxt { text-decoration: line-through; color: var(--ink3); }
+.todoedit, .todoadd { display: flex; gap: 8px; align-items: center; }
+.todoedit .in, .todoadd .in { flex: 1; min-width: 0; }
+.todolist { display: grid; gap: 6px; }
+.memofilter { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+.memofilter > * { flex: 1 1 180px; min-width: 0; }
+.memolist { display: grid; gap: 8px; }
+.memo { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--panel); }
+.memo.done { opacity: .6; }
+.memo .mhead { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 13px; }
+.memo .mk { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--focus); }
+.memo.k-todo .mk { background: var(--warn-soft); color: var(--warn); }
+.memo.k-memo .mk { background: var(--field); color: var(--ink2); border: 1px solid var(--line); }
+.memo .mex { color: var(--ink2); }
+.memo .mtext { margin-top: 6px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.memogo { margin-left: auto; background: none; border: 0; color: var(--accent); font-size: 12px; font-weight: 500; padding: 4px 0; min-height: 32px; }
+
+.sesnav .sescur { flex: 1 0 100%; order: -1; text-align: left; font-size: 15px; }
+.sesnav .btn.primary { margin-left: auto; }
+.sgwrap { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 12px; overflow: hidden; }
+.sgwrap .sgroup { border: 0; border-top: 1px solid var(--line2); border-radius: 0; margin: 0; background: transparent; }
+.sgwrap .sgroup:first-child { border-top: 0; }
+.sgwrap .sgroup summary { min-height: 44px; font-size: 14px; }
+.cbar { border: 0; border-radius: 8px; background: var(--warn-soft); margin-bottom: 10px; }
+.cbar summary { min-height: 40px; padding: 6px 12px; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+.cbar summary > span { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.cbar.empty { background: transparent; border: 1px dashed var(--line); }
+.carry { border: 0; }
+.foldcard > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 15px; font-weight: 700; min-height: 28px; }
+.foldcard.card:not([open]) { padding-block: 14px; }
+.no { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 700; flex: none; font-variant-numeric: tabular-nums; }
+.sub .no { width: 20px; height: 20px; background: transparent; color: var(--accent); border: 1px solid var(--accent); font-size: 11px; }
+.stx { min-width: 0; overflow-wrap: anywhere; }
+.foldcard.card { padding: 0; }
+.foldcard.card > summary, .pickdet > summary { min-height: 56px; padding: 12px 16px; font-size: 15px; font-weight: 700; border-radius: 14px; }
+.pickdet > summary { border: 1px solid var(--line); background: var(--panel); }
+.foldcard.card:not([open]) { padding-block: 0; }
+.foldcard.card[open] > summary { margin-bottom: 4px; }
+.foldcard.card > :not(summary) { margin-left: 16px; margin-right: 16px; }
+.foldcard.card > :last-child:not(summary) { margin-bottom: 16px; }
+.sub { border-top: 1px solid var(--line2); margin-top: 10px; padding-top: 4px; }
+.sub > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 14px; font-weight: 700; min-height: 44px; }
+.sub > summary::-webkit-details-marker { display: none; }
+.sub > summary::after { content: "펼치기 ▾"; margin-left: auto; font-size: 12px; font-weight: 500; color: var(--accent); white-space: nowrap; }
+.sub[open] > summary::after { content: "접기 ▴"; color: var(--ink3); }
+.sub[open] > summary { margin-bottom: 8px; }
+div.sub { padding: 10px 0; min-height: 0; }
+.recbody > .sub:first-child { border-top: 0; margin-top: 0; }
+.cbar { border: 1px solid var(--line); background: var(--panel); border-radius: 14px; margin-bottom: 12px; }
+.cbar summary { min-height: 62px; padding: 10px 16px; gap: 12px; white-space: normal; font-weight: 400; }
+.cbar .cic { width: 36px; height: 36px; border-radius: 10px; background: var(--warn-soft); color: var(--warn); display: grid; place-items: center; flex: none; }
+.cbar .cmain { min-width: 0; display: grid; gap: 1px; flex: 1; }
+.cbar .clab { font-size: 12px; font-weight: 700; color: var(--warn); }
+.cbar .cprev { font-size: 14px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.cbar.empty { border-style: dashed; background: transparent; }
+.cbar.empty .cic { background: var(--field); color: var(--ink3); }
+.cbar.empty .clab { color: var(--ink2); }
+.cbar.empty .cprev { color: var(--ink3); font-weight: 400; }
+.cbar .cbody { padding: 4px 16px 16px; }
+.sesnav { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; gap: 10px 8px; }
+.sesnav::before { content: "현재 회차"; flex: 1 0 100%; order: -2; font-size: 12px; font-weight: 700; color: var(--ink3); letter-spacing: .02em; margin-bottom: -6px; }
+.sesnav .sescur { font-size: 17px; font-weight: 700; }
+.recbody .sub { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); margin: 0 0 12px; padding: 0; }
+.recbody .sub > summary { min-height: 56px; padding: 12px 16px; font-size: 15px; margin: 0; }
+.recbody .sub[open] > summary { margin-bottom: 4px; }
+.recbody .sub > :not(summary) { margin-left: 16px; margin-right: 16px; }
+.recbody .sub > :last-child:not(summary) { margin-bottom: 16px; }
+.recbody .sub .no { width: 24px; height: 24px; background: var(--accent); color: var(--accent-ink); border: 0; font-size: 12px; }
+.recbody div.sub { padding: 14px 16px; }
+.dhead .exmenu { margin-left: 0; flex: none; }
+.dhead .exmenu > summary { min-height: 44px; padding: 0 12px; border-radius: 10px; font-size: 13px; }
+.dhead .in.title { min-width: 120px; }
+.exbar:empty { display: none; }
+.planprog { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 4px 0 12px; font-size: 13px; }
+.planprog .pbar { width: 90px; height: 6px; border-radius: 3px; background: var(--line2); overflow: hidden; display: inline-block; }
+.planprog .pbar i { display: block; height: 100%; background: var(--accent); }
+.tplcard { display: grid; gap: 8px; padding: 14px 16px; border: 1px dashed var(--accent); border-radius: 14px; background: var(--accent-soft); margin-bottom: 12px; }
+.tplcard .chips { margin: 0; }
+.ctxline { margin-bottom: 10px; }
+.weekboard { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; margin-bottom: 8px; }
+.wk { display: grid; justify-items: center; gap: 4px; padding: 8px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--field); min-height: 64px; }
+.wk .wkd { font-size: 12px; color: var(--ink2); }
+.wk .wkv { font-size: 18px; font-weight: 700; color: var(--ink3); }
+.wk.on { background: var(--accent-soft); border-color: var(--accent); }
+.wk.on .wkv { color: var(--focus); }
+.wklegend { overflow-wrap: anywhere; }
+.dayctl { display: flex; gap: 8px; align-items: center; margin: 4px 0 12px; }
+.dayctl .in { flex: 1; min-width: 0; }
+.planlist { display: grid; gap: 10px; }
+.planrow { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--panel); }
+.prhead { display: flex; align-items: center; gap: 6px; }
+.prhead .prex { flex: 1; min-width: 0; font-weight: 600; }
+.prno { width: 22px; height: 22px; border-radius: 50%; background: var(--field); border: 1px solid var(--line); display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--ink2); flex: none; }
+.prgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: 8px; margin-top: 8px; }
+.prgrid .f > span { font-size: 11px; }
+
+.sesnav { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 6px 10px; padding: 14px; }
+.sesnav::before { grid-column: 1 / -1; flex: none; order: 0; text-align: center; margin: 0; }
+.sesnav .stepbtn { width: 52px; height: 52px; padding: 0; border-radius: 14px; font-size: 16px; display: grid; place-items: center; }
+.sesnav .sescenter { text-align: center; min-width: 0; }
+.sesnav .sescur { display: block; flex: none; order: 0; font-size: 28px; font-weight: 800; line-height: 1.15; text-align: center; font-variant-numeric: tabular-nums; }
+.sesnav .sesmeta { display: block; margin-top: 2px; font-size: 13px; color: var(--ink2); overflow-wrap: anywhere; }
+.sesnav .addses { grid-column: 1 / -1; margin: 6px 0 0; min-height: 40px; border-style: dashed; color: var(--accent); background: transparent; font-weight: 700; }
+.exscope { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 8px 4px 6px; border-bottom: 1px solid var(--line2); margin-bottom: 4px; }
+.exslab { flex: 1 0 100%; font-size: 12px; font-weight: 700; color: var(--ink3); }
+.exsopt { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; cursor: pointer; font-size: 14px; }
+.exsopt input { width: 18px; height: 18px; }
+.extoggle { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.extoggle input { width: 18px; height: 18px; flex: none; }
+
+.sesnav .sescenter { background: none; border: 0; padding: 4px 6px; width: 100%; cursor: pointer; color: inherit; font: inherit; border-radius: 12px; }
+.sesnav .sescenter:hover { background: var(--field); }
+.sesnav .sescaret { display: block; margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--accent); }
+.pickdet { margin-bottom: 12px; }
+.pickdet > summary, .foldcard > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; }
+.pickdet > summary::-webkit-details-marker, .foldcard > summary::-webkit-details-marker { display: none; }
+.pickdet > summary, .foldcard > summary { color: var(--ink); }
+.pickdet > summary { min-height: 44px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); font-size: 13.5px; font-weight: 700; }
+.pickdet > summary::after, .foldcard > summary::after { content: "펼치기 ▾"; margin-left: auto; font-size: 12px; font-weight: 500; color: var(--accent); white-space: nowrap; }
+.pickdet[open] > summary::after, .foldcard[open] > summary::after { content: "접기 ▴"; color: var(--ink3); }
+.pickdet[open] > summary { margin-bottom: 8px; }
+.pickdet > summary { display: none !important; }
+.foldcard > summary { font-size: 15px; font-weight: 700; min-height: 28px; }
+.foldcard[open] > summary { margin-bottom: 12px; }
 .itemcard { border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-bottom: 10px; background: var(--panel); }
 .ihead { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
 .gchk { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink2); min-height: 34px; padding: 0 6px; cursor: pointer; }
@@ -469,6 +623,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     o.profile = Object.assign({}, base.profile, (m && m.profile) || {});
     ['goals', 'blocks', 'weeks', 'body', 'sessions', 'photos'].forEach(function (k) { if (!Array.isArray(o[k])) o[k] = []; });
     o.photoConsent = !!o.photoConsent;
+    o.blocks.forEach(function (bk) { if (bk && typeof bk.name === 'string') bk.name = bk.name.replace(/^블록(?=\s*\d)/, '프로그램'); });
     o.hl = { auto: !(m && m.hl && m.hl.auto === false), sets: (m && m.hl && m.hl.sets && typeof m.hl.sets === 'object') ? m.hl.sets : {} };
     o.ot = Object.assign(newOt(), (m && m.ot && typeof m.ot === 'object') ? m.ot : {});
     if (!Array.isArray(o.ot.assess)) o.ot.assess = [];
@@ -530,12 +685,15 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       if (!Array.isArray(x.items)) x.items = [];
       x.items.forEach(function (i) { i.id = i.id || uid(); ['rest', 'method', 'group', 'detail', 'rpe'].forEach(function (k) { if (i[k] == null) i[k] = ''; }); });
       if (x.msg == null) x.msg = '';
+      if (!Array.isArray(x.todos)) x.todos = [];
+      x.todos = x.todos.filter(function (t) { return t && typeof t === 'object'; }).map(function (t) { return { id: t.id || uid(), text: String(t.text || ''), done: !!t.done }; });
       x.svc = !!x.svc; x.ot = !!x.ot; x.otNo = parseInt(x.otNo, 10) || 0; x.time = x.time || '';
     });
     o.blocks.forEach(function (b) {
       b.id = b.id || uid();
       if (!Array.isArray(b.days)) b.days = [];
       b.days.forEach(function (d) { d.id = d.id || uid(); if (!Array.isArray(d.rows)) d.rows = []; });
+      ensurePlan(b);
     });
     o.weeks.forEach(function (w) {
       w.id = w.id || uid();
@@ -564,7 +722,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     ];
 
     var ex = function (ex, load, reps, sets, rest) { return { ex: ex, sr: reps + '×' + sets, rpe: 'RPE 7', tempo: '', rest: rest, load: load, cue: '', alt: '' }; };
-    var b1 = newBlock('블록 1 · 적응');
+    var b1 = newBlock('프로그램 1 · 적응');
     b1.period = '1~4주'; b1.goal = '패턴 적응 · 통증 확인'; b1.basis = '초기 관찰: 무릎 쏠림, 힌지 부족'; b1.split = '화: 하체 A / 목: 둔근 + 상체 B';
     b1.days = [newDay('Day A · 하체'), newDay('Day B · 둔근 + 상체')];
     b1.days[0].rows = [
@@ -580,8 +738,8 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     ];
     b1.rule = '모든 세트 목표 반복 + RPE 7 이하면 다음 회차 +2.5kg (덤벨은 +1~2kg). 통증이 있으면 중량 유지.';
     b1.caution = '허리 통증 3 이상이면 힌지 중단, 브릿지로 대체. 셀프: 고관절 스트레칭 주 3회 5분.';
-    var b2 = newBlock('블록 2 · 근비대');
-    b2.period = '5~8주'; b2.goal = '둔근 · 하체 볼륨 증가'; b2.basis = '블록 1에서 통증 없이 패턴 안정, 볼륨 늘려도 되는 상태'; b2.split = '화: 하체 A / 목: 둔근 + 상체 B (슈퍼세트 도입)';
+    var b2 = newBlock('프로그램 2 · 근비대');
+    b2.period = '5~8주'; b2.goal = '둔근 · 하체 볼륨 증가'; b2.basis = '프로그램 1에서 통증 없이 패턴 안정, 볼륨 늘려도 되는 상태'; b2.split = '화: 하체 A / 목: 둔근 + 상체 B (슈퍼세트 도입)';
     b2.days = [newDay('Day A · 하체'), newDay('Day B · 둔근 + 상체')];
     b2.days[0].rows = [ex('고블릿 스쿼트', '16kg', 10, 3, '90초'), ex('RDL (덤벨)', '14kg', 10, 3, '60초'), ex('리버스 런지', '10kg', 10, 3, '60초'), ex('랫풀다운', '30kg', 10, 3, '60초')];
     b2.days[1].rows = [ex('힙쓰러스트', '45kg', 10, 3, '90초'), ex('덤벨 로우 + 인클라인 푸쉬업 (슈퍼세트)', '12kg', 10, 3, '60초'), ex('케이블 페이스풀', '12kg', 12, 3, '45초')];
@@ -656,9 +814,9 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       w.issues = issues; w.focus = focus; return w;
     };
     m.weeks = [
-      wk(2, [{ problem: '스텝업 시 오른쪽 무릎 불편', cause: '박스가 높고 발 전체 압력 부족', adjust: '박스를 낮추고 다음 주부터 리버스 런지로 교체' }], '블록 1 마무리. 볼륨은 유지, 무릎 반응만 확인'),
+      wk(2, [{ problem: '스텝업 시 오른쪽 무릎 불편', cause: '박스가 높고 발 전체 압력 부족', adjust: '박스를 낮추고 다음 주부터 리버스 런지로 교체' }], '프로그램 1 마무리. 볼륨은 유지, 무릎 반응만 확인'),
       wk(1, [{ problem: '힙쓰러스트에서 허리 과신전', cause: '갈비뼈가 올라가고 골반 후경 부족', adjust: '중량은 유지하고 갈비뼈 내리기 큐잉, 상단 2초 홀드' }], '다음 주는 중량 5kg 올리고 슈퍼세트로 볼륨 늘리기'),
-      wk(0, [{ problem: '', cause: '', adjust: '' }], '재평가 인바디 후 블록 2 진행 여부 확정, 아침 식사 습관 체크')
+      wk(0, [{ problem: '', cause: '', adjust: '' }], '재평가 인바디 후 프로그램 2 진행 여부 확정, 아침 식사 습관 체크')
     ];
     m.lastLogAt = Date.now();
     return m;
@@ -668,10 +826,12 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   var LS_KEY = 'hoewon-note:v1';
   var state = {
     dash: false, month: '', cDraft: {}, hideList: false, listTab: 'active', expScope: {}, expInternal: false, photoAngle: 'front', photoDate: '', photoPick: {}, photoMsg: '', repSel: {}, members: {}, settings: {}, sel: null, tab: 'profile', view: 'list', q: '', adding: false,
-    blockSel: {}, weekSel: {}, bodyMetric: 'weight', exMetric: 'load', exSel: {}, sesSel: {}, exOpen: {}, grpOpen: {}, grpOpenW: {}, chView: 'body', addSes: false, addBlock: false, sheet: false, exportText: '', importPreview: null, importErr: '',
+    blockSel: {}, weekSel: {}, bodyMetric: 'weight', exMetric: 'load', exSel: {}, sesSel: {}, exOpen: {}, grpOpen: {}, grpOpenW: {}, chView: 'body', planDay: {}, foldOpen: {}, memoF: {}, addSes: false, addBlock: false, sheet: false, exportText: '', importPreview: null, importErr: '',
     mode: 'connecting', loaded: false, status: 'saved', errMsg: '', focus: null, stale: false
   };
   var store = null;
+  var goSubFn = null;
+  function goSub(k) { if (goSubFn) goSubFn(k); }
   var sync = {};
   function S(id) { return sync[id] || (sync[id] = { timer: null, busy: false, dirty: false, queued: false, retried: false }); }
 
@@ -873,6 +1033,28 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     return b;
   }
 
+  /* 접고 펴는 카드: 제목만 보이게 접어 두고, 열고 닫은 상태는 회원·탭별로 기억해요 */
+  var foldSeq = 0, foldNo = 0, SUBNO = { '수업 정보': 1, '운동 기록': 2, '수업 요약': 3, '계획': 4 }, FOLD_OPEN = /^(한 운동 · 피드백|메모 로그|인바디 기록|Day별 운동표|day:)/;
+  function foldK(fkey, title, note, kids) {
+    var key = (state.sel || '') + '|' + state.tab + '|' + state.chView + '|' + fkey;
+    var d = h('details', { class: 'card foldcard' }, h('summary', null, h('span', { class: 'no' }, String(++foldNo)), h('span', { class: 'stx' }, title)));
+    if (note) d.append(h('div', { class: 'muted' }, note));
+    for (var i = 0; i < kids.length; i++) add(d, kids[i]);
+    var seq = foldSeq++;
+    d.open = key in state.foldOpen ? !!state.foldOpen[key] : (FOLD_OPEN.test(fkey) || seq === 0);
+    d.addEventListener('toggle', function () { state.foldOpen[key] = d.open; });
+    return d;
+  }
+  function subfold(title, note) {
+    var key = (state.sel || '') + '|' + state.tab + '|sub|' + title, kids = Array.prototype.slice.call(arguments, 2);
+    var d = h('details', { class: 'sub' }, h('summary', null, h('span', { class: 'no' }, String(SUBNO[title] || '')), h('span', { class: 'stx' }, title)));
+    if (note) d.append(h('div', { class: 'muted' }, note));
+    kids.forEach(function (k) { add(d, k); });
+    d.open = key in state.foldOpen ? !!state.foldOpen[key] : false;
+    d.addEventListener('toggle', function () { state.foldOpen[key] = d.open; });
+    return d;
+  }
+  function fold(title, note) { return foldK(title, title, note, Array.prototype.slice.call(arguments, 2)); }
   function card(title, note) {
     var c = h('section', { class: 'card' });
     if (title) c.append(h('h3', null, title));
@@ -892,6 +1074,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
 
   function renderDetail(focus) {
+    foldSeq = 0; foldNo = 0;
     state.focus = focus || null;
     var box = $('#detail');
     var hgt = box.offsetHeight;
@@ -993,19 +1176,19 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     syncLink(p.notion);
     if (m.status !== 'ot') box.append(statusCard(m));
     if (m.status === 'ended') box.append(resultCard(m));
-    box.append(card('기본 정보', null, h('div', { class: 'fgrid' },
+    box.append(fold('기본 정보', null, h('div', { class: 'fgrid' },
       fld(m, p, 'sexAge', '성별 · 나이'), fld(m, p, 'job', '직업'), fld(m, p, 'bodyStat', '키 · 체중'), fld(m, p, 'career', '운동 경력'),
       fld(m, p, 'freq', '주당 횟수'), fld(m, p, 'period', '총 기간'), fld(m, p, 'route', '시작 경로 (OT / 바로 PT)'),
       h('div', { class: 'f' }, fld(m, p, 'notion', '노션 링크 (https://…)', { after: syncLink }), linkRow))));
-    box.append(card('병력 · 통증 · 주의 사항', null, h('div', { class: 'fgrid' },
+    box.append(fold('병력 · 통증 · 주의 사항', null, h('div', { class: 'fgrid' },
       fld(m, p, 'history', '병력 · 수술력', { ta: true }), fld(m, p, 'pain', '현재 통증', { ta: true }),
       fld(m, p, 'caution', '금기 · 주의 동작', { ta: true }), fld(m, p, 'meds', '복용 약 · 기타', { ta: true }))));
-    box.append(card('목표', '가능하면 숫자로 적어요.',
+    box.append(fold('목표', '가능하면 숫자로 적어요.',
       editTable(m, { id: 'goals', rows: m.goals, cols: GOAL_COLS, blank: blankGoal }),
       h('div', { class: 'fgrid', style: 'margin-top:12px' }, fld(m, p, 'goalType', '목표 유형 (다이어트, 근비대, 재활, 자세교정 등)', { wide: true }))));
-    box.append(card('생활 패턴', null, h('div', { class: 'fgrid' },
+    box.append(fold('생활 패턴', null, h('div', { class: 'fgrid' },
       fld(m, p, 'sleep', '수면 · 스트레스', { ta: true }), fld(m, p, 'diet', '식사 패턴', { ta: true }), fld(m, p, 'activity', '일상 활동량', { ta: true }))));
-    box.append(card('회원 이야기', null, h('div', { class: 'fgrid' },
+    box.append(fold('회원 이야기', null, h('div', { class: 'fgrid' },
       fld(m, p, 'reason', '목표의 이유', { ta: true }), fld(m, p, 'likes', '좋아하는 운동', { ta: true }),
       fld(m, p, 'dislikes', '싫어하는 것 · 불안', { ta: true }), fld(m, p, 'prevExp', '이전 운동 경험', { ta: true }),
       fld(m, p, 'memo', '메모', { ta: true, wide: true }))));
@@ -1016,9 +1199,9 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   function addBlock(m, copyFrom) {
     var b;
     if (copyFrom) {
-      b = clone2(copyFrom); b.id = uid(); b.name = '블록 ' + (m.blocks.length + 1); b.period = '';
+      b = clone2(copyFrom); b.id = uid(); b.name = '프로그램 ' + (m.blocks.length + 1); b.period = '';
       b.days.forEach(function (d) { d.id = uid(); });
-    } else b = newBlock('블록 ' + (m.blocks.length + 1));
+    } else b = newBlock('프로그램 ' + (m.blocks.length + 1));
     m.blocks.push(b); state.blockSel[m.id] = b.id; state.addBlock = false;
     touch(m); renderDetail();
   }
@@ -1032,27 +1215,27 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     var chipEls = {};
     var chips = h('div', { class: 'chips' });
     m.blocks.forEach(function (b, i) {
-      var c = h('button', { class: 'chip' + (b.id === bid ? ' on' : ''), type: 'button', onClick: function () { state.blockSel[m.id] = b.id; renderDetail(); } }, b.name || ('블록 ' + (i + 1)));
+      var c = h('button', { class: 'chip' + (b.id === bid ? ' on' : ''), type: 'button', onClick: function () { state.blockSel[m.id] = b.id; renderDetail(); } }, b.name || ('프로그램 ' + (i + 1)));
       chipEls[b.id] = c; chips.append(c);
     });
-    chips.append(h('button', { class: 'chip add', type: 'button', onClick: function () { state.addBlock = !state.addBlock; renderDetail(); } }, '+ 블록 추가'));
+    chips.append(h('button', { class: 'chip add', type: 'button', onClick: function () { state.addBlock = !state.addBlock; renderDetail(); } }, '+ 프로그램 추가'));
     box.append(chips);
     if (state.addBlock) {
       var cur = m.blocks.filter(function (b) { return b.id === bid; })[0];
       box.append(h('div', { class: 'addpanel' },
-        h('button', { class: 'btn sm', type: 'button', onClick: function () { addBlock(m, null); } }, '빈 블록으로 시작'),
-        cur ? h('button', { class: 'btn sm primary', type: 'button', onClick: function () { addBlock(m, cur); } }, '‘' + (cur.name || '현재 블록') + '’ 복사해서 추가') : null,
+        h('button', { class: 'btn sm', type: 'button', onClick: function () { addBlock(m, null); } }, '빈 프로그램으로 시작'),
+        cur ? h('button', { class: 'btn sm primary', type: 'button', onClick: function () { addBlock(m, cur); } }, '‘' + (cur.name || '현재 프로그램') + '’ 복사해서 추가') : null,
         h('span', { class: 'muted' }, '재등록할 때는 복사해서 추가하면 편해요.')));
     }
     var b = m.blocks.filter(function (x) { return x.id === bid; })[0];
     if (!b) {
-      box.append(card('아직 블록이 없어요', '블록은 운동 프로그램을 나누는 단위예요. 재등록하면 블록을 하나 더 추가하면 돼요.',
-        h('button', { class: 'btn primary', type: 'button', onClick: function () { addBlock(m, null); } }, '첫 블록 만들기')));
+      box.append(card('아직 프로그램이 없어요', '프로그램은 운동 계획을 기간별로 나누는 단위예요. 재등록하면 프로그램을 하나 더 추가하면 돼요.',
+        h('button', { class: 'btn primary', type: 'button', onClick: function () { addBlock(m, null); } }, '첫 프로그램 만들기')));
       return box;
     }
-    box.append(card('블록 정보', null, h('div', { class: 'fgrid' },
-      fld(m, b, 'name', '블록 이름', { after: function (v) { var c = chipEls[b.id]; if (c) c.textContent = v || '블록'; } }),
-      fld(m, b, 'period', '기간'), fld(m, b, 'goal', '블록 목표'), fld(m, b, 'basis', '선택 근거'),
+    box.append(fold('프로그램 정보', null, h('div', { class: 'fgrid' },
+      fld(m, b, 'name', '프로그램 이름', { after: function (v) { var c = chipEls[b.id]; if (c) c.textContent = v || '프로그램'; } }),
+      fld(m, b, 'period', '기간'), fld(m, b, 'goal', '프로그램 목표'), fld(m, b, 'basis', '선택 근거'),
       fld(m, b, 'split', '주간 분할 (요일별 부위)', { wide: true }))));
     b.days.forEach(function (d, idx) {
       var head = h('div', { class: 'dayhead' },
@@ -1062,15 +1245,208 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
           var removed = b.days.splice(idx, 1)[0]; touch(m); renderDetail();
           toast('Day를 삭제했어요', function () { b.days.splice(idx, 0, removed); touch(m); renderDetail(); });
         }, 'sm'));
-      box.append(h('section', { class: 'card' }, head, editTable(m, { id: 'day:' + d.id, rows: d.rows, cols: EX_COLS, blank: blankRow })));
+      box.append(foldK('day:' + d.id, (d.name || 'Day ' + (idx + 1)) + ' · 운동 ' + d.rows.length + '개', null, [head, editTable(m, { id: 'day:' + d.id, rows: d.rows, cols: EX_COLS, blank: blankRow })]));
     });
     box.append(h('div', { style: 'margin-bottom:14px' }, h('button', { class: 'btn', type: 'button', onClick: function () { var d = newDay('Day ' + String.fromCharCode(65 + Math.min(b.days.length, 25))); b.days.push(d); touch(m); renderDetail({ t: 'day:' + d.id, r: 0 }); } }, '+ Day 추가')));
-    box.append(card('진행 규칙 · 주의', null, h('div', { class: 'fgrid' },
+    box.append(fold('진행 규칙 · 주의', null, h('div', { class: 'fgrid' },
       fld(m, b, 'rule', '진행 규칙 (언제, 얼마나 올릴지)', { ta: true }), fld(m, b, 'caution', '주의 · 중단 기준 / 셀프 운동', { ta: true }))));
-    box.append(h('div', { class: 'footrow' }, dangerBtn('이 블록 삭제', function () {
+    box.append(h('div', { class: 'footrow' }, dangerBtn('이 프로그램 삭제', function () {
       var i = m.blocks.indexOf(b), removed = m.blocks.splice(i, 1)[0];
       state.blockSel[m.id] = null; touch(m); renderDetail();
-      toast('블록을 삭제했어요', function () { m.blocks.splice(i, 0, removed); state.blockSel[m.id] = removed.id; touch(m); renderDetail(); });
+      toast('프로그램을 삭제했어요', function () { m.blocks.splice(i, 0, removed); state.blockSel[m.id] = removed.id; touch(m); renderDetail(); });
+    })));
+    return box;
+  }
+
+  /* ---------- 설계서: 새 프로그램 양식 (데이터는 기존 프로그램과 같은 m.blocks를 써요) ---------- */
+  var WK = ['월', '화', '수', '목', '금', '토', '일'], WKK = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  var PHASES = ['안정화', '근력', '파워'];
+  var PROG_TYPES = [['linear', '선형 증량'], ['double', '이중 진행'], ['rpe', 'RPE 기반'], ['custom', '직접']];
+  var PROG_HINT = {
+    linear: '예: 목표 반복을 2회 연속 달성하면 상체 2.5kg, 하체 5kg 증량',
+    double: '예: 모든 세트에서 반복 상한(12회)을 채우면 중량을 올리고, 하한(8회)부터 다시 시작',
+    rpe: '예: 마지막 세트 RPE 8 이하면 다음 회차에 증량, 9 이상이면 유지',
+    custom: '진행 방법을 자유롭게 적어요'
+  };
+  var TEMPLATES = [
+    { id: 'diet', label: '다이어트', phase: '', goal: '체지방 감량 · 근손실 최소화',
+      days: [['Day A · 전신 (하체 중심)', [['고블릿 스쿼트', '3×12', '7', '60초'], ['루마니안 데드리프트', '3×10', '7', '60초'], ['랫풀다운', '3×12', '7', '60초'], ['체스트 프레스', '3×12', '7', '60초'], ['플랭크', '3×30초', '', '45초']]],
+        ['Day B · 전신 (상체 중심)', [['워킹 런지', '3×10', '7', '60초'], ['힙 쓰러스트', '3×12', '7', '60초'], ['시티드 로우', '3×12', '7', '60초'], ['숄더 프레스', '3×12', '7', '60초'], ['인터벌 유산소', '8×30초', '', '30초']]]],
+      week: { mon: 0, wed: 1, fri: 0 },
+      prog: { type: 'linear', up: '목표 반복을 2회 연속 달성하면 상체 2.5kg, 하체 5kg 증량', reeval: '4주마다 인바디 · 둘레 재측정', deload: '6~8주차에 1주 볼륨 70%로 감소' },
+      stop: '날카로운 통증, 어지러움, 흉통이 있으면 즉시 중단' },
+    { id: 'hyper', label: '근비대', phase: '', goal: '근육량 증가 (부위별 볼륨 확보)',
+      days: [['Day A · 상체', [['벤치 프레스', '4×8-10', '8', '90초'], ['랫풀다운', '4×10', '8', '90초'], ['인클라인 덤벨 프레스', '3×10-12', '8', '75초'], ['시티드 로우', '3×10-12', '8', '75초'], ['사이드 레터럴 레이즈', '3×15', '9', '60초'], ['케이블 푸쉬다운', '3×12-15', '9', '60초']]],
+        ['Day B · 하체', [['스쿼트', '4×8-10', '8', '120초'], ['루마니안 데드리프트', '3×8-10', '8', '90초'], ['레그 프레스', '3×12', '8', '90초'], ['레그 컬', '3×12-15', '9', '60초'], ['카프 레이즈', '4×15', '9', '45초'], ['플랭크', '3×40초', '', '45초']]]],
+      week: { mon: 0, tue: 1, thu: 0, fri: 1 },
+      prog: { type: 'double', up: '모든 세트에서 반복 상한을 채우면 중량을 올리고 하한부터 다시 시작', reeval: '4주마다 중량 · 볼륨 변화 점검', deload: '6주마다 1주 볼륨 감소' },
+      stop: '관절 통증, 저림, 날카로운 통증이 있으면 해당 동작 중단 후 대체' },
+    { id: 'posture', label: '자세교정 · 재활', phase: '안정화', goal: '움직임 패턴 개선 · 통증 없는 가동 범위 확보',
+      days: [['Day A · 전신 안정화', [['데드버그', '2×10', '', '30초'], ['버드독', '2×10', '', '30초'], ['글루트 브릿지', '3×12', '', '45초'], ['밴드 페이스풀', '3×15', '', '45초'], ['사이드 플랭크', '2×20초', '', '30초']]],
+        ['Day B · 패턴 연습', [['월 슬라이드', '2×10', '', '30초'], ['힙 힌지 (맨몸)', '3×10', '', '45초'], ['박스 스쿼트', '3×10', '', '45초'], ['케이블 로우 (가볍게)', '3×12', '', '45초'], ['호흡 · 이완', '3분', '', '']]]],
+      week: { mon: 0, thu: 1 },
+      prog: { type: 'custom', up: '통증 없이 정확한 자세로 목표 반복을 채우면 난이도를 올려요 (자세 → 반복 → 저항 순서)', reeval: '4주마다 자세 · 가동범위 재평가', deload: '통증 · 컨디션 저하 시 즉시 강도 낮추기' },
+      stop: '운동 중 통증이 올라가거나 저림이 생기면 중단하고 동작 · 강도를 조정' },
+    { id: 'strength', label: '근력', phase: '근력', goal: '주요 리프트 최대 근력 향상',
+      days: [['Day A', [['스쿼트', '5×5', '8', '3분'], ['벤치 프레스', '5×5', '8', '3분'], ['바벨 로우', '4×6', '8', '2분'], ['플랭크', '3×40초', '', '45초']]],
+        ['Day B', [['데드리프트', '3×5', '8', '3분'], ['오버헤드 프레스', '5×5', '8', '2분'], ['랫풀다운', '4×6', '8', '2분'], ['워킹 런지', '3×8', '8', '90초']]]],
+      week: { mon: 0, wed: 1, fri: 0 },
+      prog: { type: 'linear', up: '목표 세트 · 반복을 완성하면 다음 회차에 2.5kg(하체 5kg) 증량, 2회 연속 실패 시 10% 감량', reeval: '4주마다 1RM 추정 재평가', deload: '4~6주마다 1주 볼륨 감소' },
+      stop: '날카로운 통증, 자세 붕괴가 있으면 세트 중단' }
+  ];
+  function ensurePlan(b) {
+    if (typeof b.phase !== 'string') b.phase = '';
+    if (!b.week || typeof b.week !== 'object') b.week = {};
+    if (!b.prog || typeof b.prog !== 'object') b.prog = {};
+    ['type', 'reeval', 'deload'].forEach(function (k) { if (typeof b.prog[k] !== 'string') b.prog[k] = ''; });
+    if (!b.safe || typeof b.safe !== 'object') b.safe = {};
+    b.safe.screen = !!b.safe.screen;
+    ['date', 'memo', 'banned'].forEach(function (k) { if (typeof b.safe[k] !== 'string') b.safe[k] = ''; });
+    if (typeof b.memo !== 'string') b.memo = '';
+    if (!b.memo && b.basis) b.memo = b.basis;
+    if (typeof b.rule !== 'string') b.rule = '';
+    if (typeof b.caution !== 'string') b.caution = '';
+  }
+  function dayShort(d, i) { var mm = /Day\s*([A-Za-z0-9가-힣])/i.exec(d.name || ''); return mm ? mm[1].toUpperCase() : String(i + 1); }
+  function weekText(b) {
+    var out = [];
+    WKK.forEach(function (k, i) { var id = b.week[k]; if (!id) return; var di = b.days.findIndex(function (d) { return d.id === id; }); if (di >= 0) out.push(WK[i] + ' ' + (b.days[di].name ? b.days[di].name.split('·')[0].trim() : 'Day ' + dayShort(b.days[di], di))); });
+    return out.join(' · ');
+  }
+  function planBlank(b) { return !String(b.goal || '').trim() && !b.days.some(function (d) { return d.rows.some(function (r) { return String(r.ex || '').trim(); }); }); }
+  function planProgress(b) {
+    var chk = [
+      ['요약', !!(String(b.goal || '').trim() && String(b.period || '').trim())],
+      ['운동표', b.days.some(function (d) { return d.rows.some(function (r) { return String(r.ex || '').trim(); }); })],
+      ['진행 기준', !!(String(b.rule || '').trim() || b.prog.reeval || b.prog.deload)],
+      ['안전 · 금기', !!(b.safe.screen || String(b.safe.banned || '').trim() || String(b.caution || '').trim())]
+    ];
+    return { done: chk.filter(function (c) { return c[1]; }).length, todo: chk.filter(function (c) { return !c[1]; }).map(function (c) { return c[0]; }) };
+  }
+  function applyTemplate(m, b, t) {
+    b.goal = t.goal; b.phase = t.phase || '';
+    b.days = t.days.map(function (dd) {
+      var d = newDay(dd[0]);
+      d.rows = dd[1].map(function (r) { var x = blankRow(); x.ex = r[0]; x.sr = r[1]; x.rpe = r[2]; x.rest = r[3]; return x; });
+      return d;
+    });
+    b.prog = { type: '', reeval: t.prog.reeval, deload: t.prog.deload };
+    b.rule = t.prog.up; b.caution = t.stop;
+    state.planDay[m.id + ':' + b.id] = b.days[0].id;
+    touch(m); renderDetail(); toast('‘' + t.label + '’ 템플릿으로 채웠어요. 마음대로 고쳐 쓰세요.');
+  }
+  function exCard(m, d, r, i) {
+    function inp(key, label, o) {
+      o = o || {};
+      return h('label', { class: 'f' }, h('span', null, label), h('input', { class: 'in', type: 'text', value: r[key] || '', placeholder: o.ph || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': label,
+        onInput: function (e) { r[key] = e.target.value; touch(m); } }));
+    }
+    var more = h('details', { class: 'mdet' }, h('summary', null, '더보기 · 템포 · 큐잉 · 대체 운동'),
+      h('div', { class: 'mbody' }, inp('tempo', '템포', { ph: '예: 3-1-1' }), inp('cue', '큐잉 포인트'), inp('alt', '대체 운동')));
+    if (r.tempo || r.cue || r.alt) more.open = true;
+    return h('div', { class: 'planrow', dataset: { t: 'planrow', r: i } },
+      h('div', { class: 'prhead' }, h('span', { class: 'prno' }, String(i + 1)),
+        h('input', { class: 'in prex', type: 'text', list: 'exlist', value: r.ex || '', placeholder: '운동명 (예: 스쿼트)', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '운동명',
+          onInput: function (e) { r.ex = e.target.value; touch(m); } }),
+        h('button', { class: 'ib', type: 'button', 'aria-label': '위로', disabled: i === 0, onClick: function () { var t = d.rows[i - 1]; d.rows[i - 1] = d.rows[i]; d.rows[i] = t; touch(m); renderDetail(); } }, '▲'),
+        h('button', { class: 'ib', type: 'button', 'aria-label': '아래로', disabled: i === d.rows.length - 1, onClick: function () { var t = d.rows[i + 1]; d.rows[i + 1] = d.rows[i]; d.rows[i] = t; touch(m); renderDetail(); } }, '▼'),
+        h('button', { class: 'ib', type: 'button', 'aria-label': '운동 삭제', onClick: function () {
+          var removed = d.rows.splice(i, 1)[0]; touch(m); renderDetail();
+          toast('운동을 삭제했어요', function () { d.rows.splice(i, 0, removed); touch(m); renderDetail(); });
+        } }, '✕')),
+      h('div', { class: 'prgrid' }, inp('sr', '세트×반복', { ph: '3×10' }), inp('rpe', 'RPE·RIR', { ph: '7' }), inp('rest', '휴식', { ph: '60초' }), inp('load', '무게', { ph: 'kg' })),
+      more);
+  }
+  function planTab(m) {
+    var box = h('div');
+    box.append(datalists(m));
+    var bid = state.blockSel[m.id];
+    if (!m.blocks.some(function (x) { return x.id === bid; })) bid = m.blocks.length ? m.blocks[m.blocks.length - 1].id : null;
+    state.blockSel[m.id] = bid;
+    var chipsEl = h('div', { class: 'chips' });
+    m.blocks.forEach(function (x, i) {
+      chipsEl.append(h('button', { class: 'chip' + (x.id === bid ? ' on' : ''), type: 'button', onClick: function () { state.blockSel[m.id] = x.id; renderDetail(); } }, x.name || ('프로그램 ' + (i + 1))));
+    });
+    chipsEl.append(h('button', { class: 'chip add', type: 'button', onClick: function () { state.addBlock = !state.addBlock; renderDetail(); } }, '+ 프로그램 추가'));
+    box.append(chipsEl);
+    var b = m.blocks.filter(function (x) { return x.id === bid; })[0];
+    if (state.addBlock) {
+      box.append(h('div', { class: 'addpanel' },
+        h('button', { class: 'btn sm', type: 'button', onClick: function () { addBlock(m, null); } }, '빈 프로그램으로 시작'),
+        b ? h('button', { class: 'btn sm primary', type: 'button', onClick: function () { addBlock(m, b); } }, '‘' + (b.name || '현재 프로그램') + '’ 복사해서 추가') : null,
+        h('span', { class: 'muted' }, '재등록할 때는 복사해서 추가하면 편해요.')));
+    }
+    if (!b) {
+      box.append(card('아직 프로그램이 없어요', '프로그램은 운동 계획을 기간별로 나누는 단위예요. 첫 프로그램을 만들고 목적별 템플릿으로 빠르게 시작해 보세요.',
+        h('button', { class: 'btn primary', type: 'button', onClick: function () { addBlock(m, null); } }, '첫 프로그램 만들기')));
+      return box;
+    }
+    ensurePlan(b);
+    var P = planProgress(b);
+    box.append(h('div', { class: 'planprog' }, h('b', null, '설계 ' + P.done + '/4 완료'), h('span', { class: 'pbar', 'aria-hidden': 'true' }, h('i', { style: 'width:' + (P.done * 25) + '%' })), P.todo.length ? h('span', { class: 'muted ptodo' }, '비어 있는 곳: ' + P.todo.join(', ')) : h('span', { class: 'muted ptodo' }, '모두 채웠어요')));
+    if (planBlank(b)) {
+      box.append(h('div', { class: 'tplcard' }, h('b', null, '템플릿으로 시작'), h('span', { class: 'muted' }, '목적을 고르면 분할 · 운동 · 진행 기준이 미리 채워져요. 일반적인 초안이니 회원에 맞게 고쳐 쓰세요.'),
+        h('div', { class: 'chips' }, TEMPLATES.map(function (t) { return h('button', { class: 'chip', type: 'button', onClick: function () { applyTemplate(m, b, t); } }, t.label); }))));
+    }
+    /* 1 요약 */
+    var phaseIn = h('input', { class: 'in', type: 'text', list: 'phaselist', value: b.phase || '', placeholder: '단계 이름 직접 입력', autocomplete: 'off', 'aria-label': '단계', onInput: function (e) { b.phase = e.target.value; touch(m); } });
+    var phCustom = !!(b.phase && PHASES.indexOf(b.phase) < 0), phOpen = phCustom || !!state.phCustom;
+    var phChips = h('div', { class: 'chips' }, PHASES.map(function (ph) {
+      return h('button', { class: 'chip sm' + (b.phase === ph ? ' on' : ''), type: 'button', onClick: function () { b.phase = b.phase === ph ? '' : ph; state.phCustom = false; touch(m); renderDetail(); } }, ph);
+    }).concat([h('button', { class: 'chip sm' + (phOpen ? ' on' : ''), type: 'button', onClick: function () { if (phOpen) { if (phCustom) b.phase = ''; state.phCustom = false; } else state.phCustom = true; touch(m); renderDetail(); } }, '직접')]));
+    box.append(fold('프로그램 요약', null,
+      h('div', { class: 'ctxline muted' }, '회원 목표: ' + (goalLine(m) || '아직 없어요') + (m.profile.freq ? ' · 주 ' + m.profile.freq : '')),
+      h('div', { class: 'fgrid' },
+        fld(m, b, 'name', '프로그램 이름'), fld(m, b, 'period', '기간 (예: 1~4주)'), fld(m, b, 'goal', '한 줄 목표', { wide: true }),
+        h('div', { class: 'f wide' }, h('span', null, '단계 (선택)'), phChips, phOpen ? phaseIn : null)),
+      h('datalist', { id: 'phaselist' }, PHASES.map(function (x) { return h('option', { value: x }); }))));
+    /* 2 Day별 운동표 */
+    var dkey = m.id + ':' + b.id, did = state.planDay[dkey];
+    if (!b.days.some(function (d) { return d.id === did; })) did = b.days.length ? b.days[0].id : null;
+    state.planDay[dkey] = did;
+    var d = b.days.filter(function (x) { return x.id === did; })[0];
+    var dchips = h('div', { class: 'chips' });
+    b.days.forEach(function (x, i) { dchips.append(h('button', { class: 'chip' + (x.id === did ? ' on' : ''), type: 'button', onClick: function () { state.planDay[dkey] = x.id; renderDetail(); } }, x.name || ('Day ' + (i + 1)))); });
+    dchips.append(h('button', { class: 'chip add', type: 'button', onClick: function () { var nd = newDay('Day ' + String.fromCharCode(65 + Math.min(b.days.length, 25))); b.days.push(nd); state.planDay[dkey] = nd.id; touch(m); renderDetail(); } }, '+ Day'));
+    var dayKids = [dchips];
+    if (d) {
+      var di0 = b.days.indexOf(d);
+      dayKids.push(h('div', { class: 'dayctl' },
+        h('input', { class: 'in', type: 'text', value: d.name || '', placeholder: 'Day 이름 (예: Day A · 하체)', autocomplete: 'off', 'aria-label': 'Day 이름', onInput: function (e) { d.name = e.target.value; touch(m); } }),
+        h('button', { class: 'btn sm', type: 'button', onClick: function () { var c = clean(d); c.id = uid(); c.name = (d.name || 'Day') + ' 복사'; b.days.splice(di0 + 1, 0, c); state.planDay[dkey] = c.id; touch(m); renderDetail(); } }, '복사'),
+        b.days.length > 1 ? dangerBtn('삭제', function () {
+          var removed = b.days.splice(di0, 1)[0], oldWeek = clean(b.week);
+          WKK.forEach(function (k) { if (b.week[k] === removed.id) b.week[k] = ''; });
+          touch(m); renderDetail();
+          toast('Day를 삭제했어요', function () { b.days.splice(di0, 0, removed); b.week = oldWeek; touch(m); renderDetail(); });
+        }, 'sm') : null));
+      var list = h('div', { class: 'planlist' });
+      d.rows.forEach(function (r, i) { list.append(exCard(m, d, r, i)); });
+      dayKids.push(list);
+      dayKids.push(h('button', { class: 'btn sm addrow', type: 'button', onClick: function () { d.rows.push(blankRow()); touch(m); renderDetail({ t: 'planrow', r: d.rows.length - 1 }); } }, '+ 운동 추가'));
+    }
+    box.append(fold.apply(null, ['Day별 운동표', '운동명은 자동완성돼요. 세트×반복, 강도, 휴식, 무게만 먼저 채우고 나머지는 더보기에 적어요.'].concat(dayKids)));
+    /* 3 진행 기준 */
+    box.append(fold('진행 기준', null,
+      h('div', { class: 'fgrid' },
+        fld(m, b, 'rule', '증량 규칙 (언제, 얼마나 올릴지)', { ta: true, wide: true, ph: '예: 목표 반복을 2회 연속 달성하면 상체 2.5kg, 하체 5kg 증량' }),
+        fld(m, b.prog, 'reeval', '재평가 시점', { ph: '예: 4주마다' }), fld(m, b.prog, 'deload', '디로드 주기', { ph: '예: 6주마다 1주 볼륨 감소' }))));
+    /* 4 안전 · 금기 */
+    var scr = h('input', { type: 'checkbox', checked: !!b.safe.screen, onChange: function (e) { b.safe.screen = e.target.checked; if (b.safe.screen && !b.safe.date) b.safe.date = today(); touch(m); renderDetail(); } });
+    box.append(fold('안전 · 금기', '통증 · 주의사항은 수업 일지, 프로필의 주의사항과 같은 데이터예요.',
+      cautionBar(m, false),
+      h('label', { class: 'gchk', style: 'margin:10px 0' }, scr, '사전 스크리닝(PAR-Q+ 등)을 했어요'),
+      h('div', { class: 'fgrid' },
+        b.safe.screen ? fld(m, b.safe, 'date', '스크리닝 날짜', { type: 'date' }) : null,
+        b.safe.screen ? fld(m, b.safe, 'memo', '스크리닝 결과 메모 (트레이너 전용 · 내보내기에 안 들어가요)', { ta: true, wide: true }) : null,
+        fld(m, b.safe, 'banned', '금기 운동', { ta: true, wide: true, ph: '예: 오버헤드 동작, 깊은 스쿼트' }),
+        fld(m, b, 'caution', '중단 기준 (통증 · 컨디션)', { ta: true, wide: true, ph: '예: 날카로운 통증이나 저림이 있으면 즉시 중단' }))));
+    /* 5 메모 */
+    box.append(fold('메모', '이전 양식의 ‘선택 근거’를 적어 둔 경우 여기로 옮겨 보관돼요.', h('div', { class: 'fgrid' }, fld(m, b, 'memo', '자유 메모', { ta: true, wide: true }))));
+    box.append(h('div', { class: 'footrow' }, dangerBtn('이 프로그램 삭제', function () {
+      var i = m.blocks.indexOf(b), removed = m.blocks.splice(i, 1)[0];
+      state.blockSel[m.id] = null; touch(m); renderDetail();
+      toast('프로그램을 삭제했어요', function () { m.blocks.splice(i, 0, removed); state.blockSel[m.id] = removed.id; touch(m); renderDetail(); });
     })));
     return box;
   }
@@ -1188,6 +1564,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       h('button', { class: 'btn sm', type: 'button', disabled: idx <= 0, onClick: function () { pick(keys[idx - 1]); } }, '다음 주 ▶')));
     var groups = {}, gkeys = [];
     keys.forEach(function (k) { var g = mk(k); if (!groups[g]) { groups[g] = []; gkeys.push(g); } groups[g].push(k); });
+    box.append(h('div', { class: 'grouphint' }, '달을 누르면 그 달의 주차가 펼쳐져요.'));
     gkeys.forEach(function (g, gi) {
       var det = h('details', { class: 'sgroup' },
         h('summary', null, g.slice(0, 4) + '년 ' + parseInt(g.slice(5), 10) + '월 · ' + groups[g].length + '주'),
@@ -1210,7 +1587,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     };
     var planned = parseInt((String(m.profile.freq || '').match(/\d+/) || [])[0], 10);
     var cond = avg('cond');
-    box.append(card('이 주 한눈에', '수업 일지와 변화 탭의 기록에서 자동으로 모아요.', h('div', { class: 'stats' },
+    box.append(fold('이 주 한눈에', '수업 일지와 변화 탭의 기록에서 자동으로 모아요.', h('div', { class: 'stats' },
       stat('수업', ses.length + '', '회', ses.length ? ses.map(function (x) { return x.no; }).filter(Boolean).join(' · ') + '회차' : '수업 없음'),
       stat('수행률', isFinite(planned) && planned > 0 ? Math.round(ses.length / planned * 100) + '' : '–', isFinite(planned) && planned > 0 ? '%' : '', isFinite(planned) && planned > 0 ? '주 ' + planned + '회 기준' : '프로필의 주당 횟수를 넣으면 나와요'),
       stat('컨디션', isFinite(cond) ? String(cond) : '–', isFinite(cond) ? '/10' : '', isFinite(cond) ? '수업 평균' : '수업 일지에 입력하면 나와요'),
@@ -1226,16 +1603,16 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         x.memo ? h('div', { style: 'white-space:pre-wrap;margin-top:6px' }, x.memo) : h('div', { class: 'muted', style: 'margin-top:6px' }, '수업 메모 없음')));
     });
     box.append(hlCard(m, 'w:' + K));
-    box.append(card('이 주의 수업', null, sesList));
-    box.append(card('이 주에 한 운동', '수업 일지에서 자동으로 정리돼요.', autoLiftsTable(m, K)));
-    box.append(card('셀프 운동', null, h('div', { class: 'muted' }, '개인 운동 기록 기능이 생기면 회원이 직접 적은 셀프 운동이 여기에 자동으로 나와요. 지금은 입력하지 않아도 돼요.')));
+    box.append(fold('이 주의 수업', null, sesList));
+    box.append(fold('이 주에 한 운동', '수업 일지에서 자동으로 정리돼요.', autoLiftsTable(m, K)));
+    box.append(fold('셀프 운동', null, h('div', { class: 'muted' }, '개인 운동 기록 기능이 생기면 회원이 직접 적은 셀프 운동이 여기에 자동으로 나와요. 지금은 입력하지 않아도 돼요.')));
 
     var note = weekNote(m, K), isNew = !note;
     if (isNew) { note = newWeek(''); note.start = K; note.range = rangeText(K); note.days = []; note.lifts = []; }
     function ensure() { if (m.weeks.indexOf(note) < 0) m.weeks.push(note); }
-    box.append(card('문제점 → 원인 → 다음 주 조정', '이 부분만 직접 적어요. 다음 수업을 준비하는 판단이에요.',
+    box.append(fold('문제점 → 원인 → 다음 주 조정', '이 부분만 직접 적어요. 다음 수업을 준비하는 판단이에요.',
       editTable(m, { id: 'issues:' + K, rows: note.issues, cols: ISSUE_COLS, blank: blankIssue, log: true, onEdit: ensure })));
-    box.append(card('다음 주 핵심 한 줄', null, h('div', { class: 'fgrid' }, fld(m, note, 'focus', '핵심', { wide: true, log: true, after: ensure }))));
+    box.append(fold('다음 주 핵심 한 줄', null, h('div', { class: 'fgrid' }, fld(m, note, 'focus', '핵심', { wide: true, log: true, after: ensure }))));
 
     var leg = [];
     m.weeks.forEach(function (w) {
@@ -1254,7 +1631,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     { key: 'date', label: '날짜', type: 'date', w: '17%' }, { key: 'weight', label: '체중(kg)', type: 'num', w: '11%' },
     { key: 'muscle', label: '골격근량(kg)', type: 'num', w: '12%' }, { key: 'fat', label: '체지방량(kg)', type: 'num', w: '12%' },
     { key: 'fatPct', label: '체지방률(%)', type: 'num', w: '12%' }, { key: 'abd', label: '복부비만', type: 'num', w: '11%' },
-    { key: 'note', label: '눈바디 · 메모', w: '' }
+    { key: 'note', label: '메모', w: '' }
   ];
   var BODY_METRICS = [['weight', '체중', 'kg'], ['muscle', '골격근량', 'kg'], ['fat', '체지방량', 'kg'], ['fatPct', '체지방률', '%'], ['abd', '복부비만', '']];
   var EX_METRICS = [['load', '중량', 'kg'], ['sets', '세트', '세트'], ['reps', '횟수', '회'], ['vol', '볼륨', 'kg']];
@@ -1322,6 +1699,12 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     return h('div', { class: 'chartwrap' }, svg);
   }
 
+  function segBar(list, cur, onPick) {
+    return h('div', { class: 'seg', role: 'tablist' }, list.map(function (x) {
+      var on = cur === x[0];
+      return h('button', { class: 'segbtn' + (on ? ' on' : ''), type: 'button', role: 'tab', 'aria-selected': on ? 'true' : 'false', onClick: function () { onPick(x[0]); } }, x[1]);
+    }));
+  }
   function chips(list, cur, onPick) {
     return h('div', { class: 'chips' }, list.map(function (x) {
       return h('button', { class: 'chip' + (cur === x[0] ? ' on' : ''), type: 'button', onClick: function () { onPick(x[0]); } }, x[1]);
@@ -1345,19 +1728,19 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
           h('div', { class: 'v' }, last ? fmtN(last.y) : '–', last && x[2] ? h('small', null, x[2]) : null),
           h('div', { class: 'd' }, s.length > 1 ? '처음 ' + fmtN(s[0].y) + ' 대비 ' + signed(last.y - s[0].y) : s.length === 1 ? '기록 1회' : '기록 없음'));
       });
-      out.append(card('변화 요약', have ? '가장 최근 값과, 첫 기록 대비 변화예요.' : '아래 표에 인바디를 입력하면 변화가 여기에 보여요.', h('div', { class: 'stats' }, tiles)));
+      out.append(fold('변화 요약', have ? '가장 최근 값과, 첫 기록 대비 변화예요.' : '아래 표에 인바디를 입력하면 변화가 여기에 보여요.', h('div', { class: 'stats' }, tiles)));
       var met = BODY_METRICS.filter(function (x) { return x[0] === state.bodyMetric; })[0] || BODY_METRICS[0];
       var s = bodySeries(m.body, met[0]);
-      out.append(card('변화 그래프', null,
+      out.append(fold('변화 그래프', null,
         chips(BODY_METRICS, met[0], function (k) { state.bodyMetric = k; paint(); }),
         s.length > 1 ? lineChart(s, met[2], met[1]) : h('div', { class: 'muted' }, met[1] + ' 기록이 2회 이상이면 그래프가 나와요.')));
     }
     function later() { clearTimeout(timer); timer = setTimeout(paint, 300); }
     paint();
     box.append(out);
-    box.append(photoCard(m));
-    box.append(card('인바디 · 눈바디 기록', '측정할 때마다 한 줄씩 추가해요. 복부비만에는 쓰는 수치(복부지방률 등)를 그대로 적어요. 날짜순으로 정렬돼요.',
+    box.append(fold('인바디 기록', '측정할 때마다 한 줄씩 추가해요. 복부비만에는 쓰는 수치(복부지방률 등)를 그대로 적어요. 날짜순으로 정렬돼요.',
       editTable(m, { id: 'body', rows: m.body, cols: BODY_COLS, blank: blankBody, log: true, noMove: true, onEdit: later })));
+    box.append(photoCard(m));
     return box;
   }
 
@@ -1412,7 +1795,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
   function blankItem(part) { return { id: uid(), part: part || '', ex: '', load: '', reps: '', sets: '', rest: '', method: '', group: '', detail: '', rpe: '', feedback: '' }; }
   function newSession(m, copyFrom) {
-    return { id: uid(), no: nextNo(m), date: today(), memo: '', msg: '', svc: false,
+    return { id: uid(), no: nextNo(m), date: today(), memo: '', msg: '', svc: false, todos: [],
       items: copyFrom && copyFrom.items.length
         ? (function () {
             var gmap = {};
@@ -1600,9 +1983,143 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     return wrap;
   }
 
+  /* ---------- 메모 로그: 피드백 · 다음 회차 할 일 · 수업 메모 + 주의사항 띠 (트레이너 전용) ---------- */
+  function cautionBar(m, startOpen) {
+    var p = m.profile, F = [['pain', '통증 · 불편'], ['caution', '주의 · 금기'], ['meds', '복용 약']];
+    var filled = F.filter(function (f) { return String(p[f[0]] || '').trim(); });
+    var det = h('details', { class: 'cbar' + (filled.length ? '' : ' empty') });
+    function sumText() {
+      var fl = F.filter(function (f) { return String(p[f[0]] || '').trim(); });
+      return fl.length ? fl.map(function (f) { return String(p[f[0]]).trim().replace(/\s+/g, ' '); }).join('  ·  ') : '아직 없어요. 눌러서 적어 두세요';
+    }
+    var cic = h('span', { class: 'cic', 'aria-hidden': 'true' });
+    cic.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2.5 20h19L12 3z"/><path d="M12 10v4"/><path d="M12 17.5v.01"/></svg>';
+    var stx = h('span', { class: 'cprev' }, sumText()), sum = h('summary', null, cic, h('span', { class: 'cmain' }, h('span', { class: 'clab' }, '주의사항 · 트레이너만 보여요'), stx));
+    det.append(sum);
+    var body = h('div', { class: 'cbody' });
+    F.forEach(function (f) {
+      body.append(h('label', { class: 'f' }, h('span', null, f[1]),
+        h('textarea', { class: 'ta', rows: 2, value: p[f[0]] || '', placeholder: f[0] === 'pain' ? '예: 오른쪽 무릎 안쪽 통증, 허리 디스크 병력' : f[0] === 'caution' ? '예: 오버헤드 동작 피하기, 깊은 스쿼트 금지' : '예: 혈압약', 'aria-label': f[1],
+          onInput: function (e) { p[f[0]] = e.target.value; touch(m); stx.textContent = sumText(); det.classList.toggle('empty', !F.some(function (g) { return String(p[g[0]] || '').trim(); })); } })));
+    });
+    body.append(h('div', { class: 'muted' }, '프로필의 "병력 · 통증 · 주의 사항"과 같은 칸이에요. 어디서 고쳐도 같이 바뀌고, 회원 PDF에는 들어가지 않아요.'));
+    det.append(body);
+    if (startOpen) det.open = true;
+    return det;
+  }
+  function pendingTodos(m, before) {
+    var out = [];
+    m.sessions.slice().sort(byDateNo).forEach(function (x) {
+      if (before && !(x !== before && (x.date < (before.date || '~') || (x.date === before.date && (parseInt(x.no, 10) || 0) < (parseInt(before.no, 10) || 0))))) return;
+      (x.todos || []).forEach(function (t) { if (!t.done && String(t.text).trim()) out.push({ ses: x, todo: t }); });
+    });
+    return out;
+  }
+  function todoRow(m, x, t, showSrc, after) {
+    var cb = h('input', { type: 'checkbox', checked: !!t.done, 'aria-label': t.text, onChange: function (e) { t.done = e.target.checked; touch(m, 'log'); row.classList.toggle('done', t.done); if (after) after(); } });
+    var row = h('label', { class: 'todo' + (t.done ? ' done' : '') }, cb, h('span', { class: 'ttxt' }, t.text), showSrc ? h('span', { class: 'muted tsrc' }, sesLabel(x).split(' · ').slice(0, 2).join(' · ')) : null);
+    return row;
+  }
+  function todoCard(m, s) {
+    var wrap = h('details', { class: 'sub todocard' });
+    var list = h('div', { class: 'todolist' });
+    var ttx = h('span', { class: 'stx' }, ''), sum = h('summary', null, h('span', { class: 'no' }, '4'), ttx);
+    function paint() {
+      ttx.textContent = '계획 · 다음 회차 할 것' + (s.todos.length ? ' · ' + s.todos.length + '개' : '') + '';
+      list.textContent = '';
+      s.todos.forEach(function (t, i) {
+        list.append(h('div', { class: 'todoedit' },
+          h('input', { class: 'in', type: 'text', value: t.text, 'aria-label': '다음 회차 할 것', autocomplete: 'off', onInput: function (e) { t.text = e.target.value; touch(m, 'log'); } }),
+          h('button', { class: 'ib', type: 'button', 'aria-label': '삭제', onClick: function () { s.todos.splice(i, 1); touch(m, 'log'); paint(); } }, '✕')));
+      });
+    }
+    var add = h('input', { class: 'in', type: 'text', placeholder: '예: 스쿼트 중량 2.5kg 올리기 / 무릎 모임 다시 확인', autocomplete: 'off', 'aria-label': '새 할 일' });
+    function commit() { var v = add.value.trim(); if (!v) return; s.todos.push({ id: uid(), text: v, done: false }); add.value = ''; touch(m, 'log'); paint(); add.focus(); }
+    add.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
+    wrap.append(sum, h('div', { class: 'mbody' }, h('div', { class: 'muted', style: 'grid-column:1/-1' }, '여기 적은 건 다음 수업 일지 맨 위에 "지난 수업에서 넘어온 할 일"로 떠요.'), list,
+      h('div', { class: 'todoadd' }, add, h('button', { class: 'btn sm primary', type: 'button', onClick: commit }, '추가'))));
+    if (s.todos.length) wrap.open = true;
+    paint();
+    return wrap;
+  }
+  function carryOver(m, s) {
+    var P = pendingTodos(m, s);
+    if (!P.length) return null;
+    var det = h('details', { class: 'carry' });
+    var sum = h('summary', null, '지난 수업에서 넘어온 할 일 ' + P.length + '개');
+    var body = h('div', { class: 'cbody' });
+    P.forEach(function (r) { body.append(todoRow(m, r.ses, r.todo, true, function () { var n = pendingTodos(m, s).length; sum.textContent = n ? '지난 수업에서 넘어온 할 일 ' + n + '개' : '넘어온 할 일을 모두 확인했어요'; })); });
+    det.append(sum, body);
+    det.open = true;
+    return det;
+  }
+  function pastMemos(m, s, it, limit) {
+    var k = exKey(it.ex); if (!k) return [];
+    return flatItems(m).filter(function (r) {
+      return r.ses !== s && exKey(r.ex) === k && String(r.fb).trim() && (r.date < (s.date || '~') || (r.date === s.date && (parseInt(r.no, 10) || 0) < (parseInt(s.no, 10) || 0)));
+    }).sort(byDateNo).reverse().slice(0, limit || 2);
+  }
+  function memoEntries(m) {
+    var E = [];
+    m.sessions.forEach(function (x) {
+      var lab = sesLabel(x).split(' · ').slice(0, 2).join(' · ');
+      if (String(x.memo || '').trim()) E.push({ ses: x, kind: 'memo', ex: '', text: x.memo, date: x.date || '', no: x.no, lab: lab });
+      (x.todos || []).forEach(function (t) { if (String(t.text).trim()) E.push({ ses: x, kind: 'todo', ex: '', text: t.text, todo: t, date: x.date || '', no: x.no, lab: lab }); });
+      (x.items || []).forEach(function (i) { if (String(i.feedback || '').trim()) E.push({ ses: x, kind: 'fb', ex: normName(i.ex), text: i.feedback, date: x.date || '', no: x.no, lab: lab }); });
+    });
+    return E.sort(function (a, b) { return byDateNo(b, a); });
+  }
+  function memosTab(m) {
+    var box = h('div'), F = state.memoF[m.id] || (state.memoF[m.id] = { kind: 'all', ex: '', q: '', n: 30 });
+    box.append(cautionBar(m, false));
+    var all = memoEntries(m);
+    var pend = pendingTodos(m, null);
+    if (pend.length) {
+      var pc = h('details', { class: 'carry' }, h('summary', null, '아직 안 한 할 일 ' + pend.length + '개'));
+      var pb = h('div', { class: 'cbody' });
+      pend.forEach(function (r) { pb.append(todoRow(m, r.ses, r.todo, true, function () { renderDetail(); })); });
+      pc.append(pb); pc.open = true; box.append(pc);
+    }
+    var kinds = [['all', '전체'], ['fb', '운동 피드백'], ['todo', '할 일'], ['memo', '수업 메모']];
+    var cnt = {}; all.forEach(function (e) { cnt[e.kind] = (cnt[e.kind] || 0) + 1; });
+    var bar = h('div', { class: 'chips' }, kinds.map(function (k) {
+      return h('button', { class: 'chip' + (F.kind === k[0] ? ' on' : ''), type: 'button', onClick: function () { F.kind = k[0]; F.n = 30; renderDetail(); } }, k[1] + (k[0] === 'all' ? ' ' + all.length : ' ' + (cnt[k[0]] || 0)));
+    }));
+    var exs = {}; all.forEach(function (e) { if (e.ex) exs[exKey(e.ex)] = e.ex; });
+    var exSel = h('select', { class: 'in', 'aria-label': '운동으로 거르기', onChange: function (e) { F.ex = e.target.value; F.n = 30; renderDetail(); } }, h('option', { value: '' }, '모든 운동'));
+    Object.keys(exs).sort().forEach(function (k) { exSel.append(h('option', { value: k }, exs[k])); });
+    exSel.value = F.ex;
+    var q = h('input', { class: 'in', type: 'search', placeholder: '메모 검색', value: F.q, 'aria-label': '메모 검색', autocomplete: 'off' });
+    var listBox = h('div', { class: 'memolist' });
+    function paint() {
+      var t = F.q.trim().toLowerCase();
+      var rows = all.filter(function (e) {
+        if (F.kind !== 'all' && e.kind !== F.kind) return false;
+        if (F.ex && exKey(e.ex) !== F.ex) return false;
+        if (t && (e.text + ' ' + e.ex).toLowerCase().indexOf(t) < 0) return false;
+        return true;
+      });
+      listBox.textContent = '';
+      if (!rows.length) { listBox.append(h('div', { class: 'muted', style: 'padding:14px 4px' }, all.length ? '조건에 맞는 메모가 없어요.' : '아직 메모가 없어요. 수업 일지에서 운동별 피드백이나 "다음 회차 할 것"을 적으면 여기에 모여요.')); return; }
+      rows.slice(0, F.n).forEach(function (e) {
+        var kl = e.kind === 'fb' ? '피드백' : e.kind === 'todo' ? '할 일' : '수업 메모';
+        var go = h('button', { class: 'memogo', type: 'button', onClick: function () { state.sesSel[m.id] = e.ses.id; state.grpOpen[m.id] = state.grpOpen[m.id] || {}; goSub('records'); } }, '그 회차 보기 ›');
+        listBox.append(h('div', { class: 'memo k-' + e.kind + (e.todo && e.todo.done ? ' done' : '') },
+          h('div', { class: 'mhead' }, h('span', { class: 'mk' }, kl), h('b', null, e.lab || '날짜 없음'), e.ex ? h('span', { class: 'mex' }, e.ex) : null, e.todo ? h('span', { class: 'muted' }, e.todo.done ? '완료' : '미완료') : null, go),
+          h('div', { class: 'mtext' }, e.text)));
+      });
+      if (rows.length > F.n) listBox.append(h('button', { class: 'btn sm', type: 'button', style: 'margin-top:8px', onClick: function () { F.n += 30; paint(); } }, '더 보기 (' + (rows.length - F.n) + '개 남음)'));
+    }
+    q.addEventListener('input', function () { F.q = q.value; F.n = 30; paint(); });
+    box.append(fold('메모 로그', '운동별 피드백, 다음 회차 할 것, 수업 메모를 날짜순으로 모아 봐요. (회원에게 보이지 않아요)', bar, h('div', { class: 'memofilter' }, exSel, q), listBox));
+    paint();
+    return box;
+  }
+
   function logView(m, mode) {
     var only = mode === 'ot', box = h('div');
     box.append(datalists(m));
+    box.append(cautionBar(m, false));
     var pool = only ? otSess(m) : m.sessions;
     var sorted = pool.slice().sort(function (a, b) { return byDateNo(b, a); });
     var sid = state.sesSel[m.id];
@@ -1610,13 +2127,20 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     state.sesSel[m.id] = sid;
     var chipEls = {}, open = state.grpOpen[m.id] || (state.grpOpen[m.id] = {});
     var gkey = function (x) { return x.date ? x.date.slice(0, 7) : ''; };
-    function pick(x) { state.sesSel[m.id] = x.id; open[gkey(x)] = true; state.addSes = false; renderDetail(); }
+    function pick(x) { state.pickOpen = false; state.foldOpen[(state.sel || '') + '|rec'] = true; state.sesSel[m.id] = x.id; open[gkey(x)] = true; state.addSes = false; renderDetail(); }
     function addSes(copy) {
       var ns = only ? newOtSession(m, copy) : newSession(m, copy);
       m.sessions.push(ns); state.sesSel[m.id] = ns.id; open[gkey(ns)] = true; state.addSes = false;
       touch(m, 'log'); renderDetail();
     }
-    var curLabel = null;
+    var curLabel = null, curNo = null, curMeta = null;
+    var WD = ['일', '월', '화', '수', '목', '금', '토'];
+    function setCur(x) {
+      if (!curNo) return;
+      curNo.textContent = x.no ? x.no + '회차' : '회차';
+      var d = x.date ? new Date(x.date + 'T00:00:00') : null, ps = sesParts(x);
+      curMeta.textContent = (d && !isNaN(d) ? fmtShort(x.date) + '(' + WD[d.getDay()] + ')' : '날짜 없음') + (x.time ? ' ' + x.time : '') + (ps.length ? ' · ' + ps.join('·') : '');
+    }
     if (only) {
       var bar = h('div', { class: 'chips' });
       pool.forEach(function (x) { bar.append(h('button', { class: 'chip big' + (x.id === sid ? ' on' : ''), type: 'button', onClick: function () { state.sesSel[m.id] = x.id; renderDetail(); } }, sesLabel(x))); });
@@ -1626,12 +2150,21 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       if (pool.length) box.append(h('div', { class: 'row', style: 'margin:-4px 0 10px' }, h('button', { class: 'btn sm', type: 'button', onClick: function () { addSes(pool[pool.length - 1]); } }, '이전 OT 운동 복사해서 추가')));
     } else if (sorted.length) {
       var idx = sorted.findIndex(function (x) { return x.id === sid; });
-      curLabel = h('span', { class: 'sescur' }, idx >= 0 ? sesLabel(sorted[idx]) : '');
+      curNo = h('span', { class: 'sescur' }); curMeta = h('span', { class: 'sesmeta' });
+      var curCaret = h('span', { class: 'sescaret' });
+      function paintCaret() { curCaret.textContent = '회차 목록 · 전체 ' + sorted.length + '회 ' + (state.pickOpen ? '▴' : '▾'); curLabel.classList.toggle('open', !!state.pickOpen); curLabel.setAttribute('aria-expanded', state.pickOpen ? 'true' : 'false'); }
+      curLabel = h('button', { class: 'sescenter', type: 'button', 'aria-label': '회차 목록 열고 닫기', onClick: function () {
+        state.pickOpen = !state.pickOpen;
+        var pdn = box.querySelector('.pickdet'); if (pdn) pdn.open = state.pickOpen;
+        paintCaret();
+      } }, curNo, curMeta, curCaret);
+      paintCaret();
+      if (idx >= 0) setCur(sorted[idx]);
       box.append(h('div', { class: 'sesnav' },
-        h('button', { class: 'btn sm', type: 'button', disabled: idx < 0 || idx >= sorted.length - 1, onClick: function () { pick(sorted[idx + 1]); } }, '◀ 이전'),
+        h('button', { class: 'btn stepbtn', type: 'button', 'aria-label': '이전 회차', disabled: idx < 0 || idx >= sorted.length - 1, onClick: function () { pick(sorted[idx + 1]); } }, '◀'),
         curLabel,
-        h('button', { class: 'btn sm', type: 'button', disabled: idx <= 0, onClick: function () { pick(sorted[idx - 1]); } }, '다음 ▶'),
-        h('button', { class: 'btn sm primary', type: 'button', style: 'margin-left:auto', onClick: function () { state.addSes = !state.addSes; renderDetail(); } }, '+ 회차 추가')));
+        h('button', { class: 'btn stepbtn', type: 'button', 'aria-label': '다음 회차', disabled: idx <= 0, onClick: function () { pick(sorted[idx - 1]); } }, '▶'),
+        h('button', { class: 'btn sm addses', type: 'button', onClick: function () { state.addSes = !state.addSes; renderDetail(); } }, '+ 회차 추가')));
       if (state.addSes) {
         box.append(h('div', { class: 'addpanel' },
           h('button', { class: 'btn sm', type: 'button', onClick: function () { addSes(null); } }, '빈 회차로 시작'),
@@ -1641,6 +2174,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       var groups = {}, gkeys = [];
       sorted.forEach(function (x) { var k = gkey(x); if (!groups[k]) { groups[k] = []; gkeys.push(k); } groups[k].push(x); });
       var curKey = idx >= 0 ? gkey(sorted[idx]) : '';
+      var sgw = h('div', { class: 'sgwrap' });
       gkeys.forEach(function (k, gi) {
         var list = groups[k];
         var det = h('details', { class: 'sgroup' },
@@ -1651,8 +2185,11 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
           })));
         if (open[k] !== undefined ? open[k] : (k === curKey || gi === 0)) det.open = true;
         det.addEventListener('toggle', function () { open[k] = det.open; });
-        box.append(det);
+        sgw.append(det);
       });
+      var pd = h('details', { class: 'pickdet' }, h('summary', null, h('span', { class: 'stx' }, '회차 목록 · 전체 ' + sorted.length + '회')), sgw);
+      pd.open = !!state.pickOpen; pd.addEventListener('toggle', function () { state.pickOpen = pd.open; });
+      box.append(pd);
     }
     var s = pool.filter(function (x) { return x.id === sid; })[0];
     if (only && !s) { box.append(card('OT 수업 일지', 'OT 때 한 운동과 피드백을 PT 수업 일지와 같은 방식으로 적어요. OT 1, OT 2를 각각 만들어요.', h('button', { class: 'btn primary', type: 'button', onClick: function () { addSes(null); } }, '+ OT 1 기록 시작'))); return box; }
@@ -1661,31 +2198,43 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         h('button', { class: 'btn primary', type: 'button', onClick: function () { addSes(null); } }, '첫 회차 만들기')));
       return box;
     }
-    function updChip() { var c = chipEls[s.id]; if (c) c.textContent = sesLabel(s); if (curLabel) curLabel.textContent = sesLabel(s); }
-    box.append(card(s.ot ? 'OT ' + (s.otNo || '') + ' 수업' : '이번 수업', null, h('div', { class: 'fgrid' },
+    function updChip() { var c = chipEls[s.id]; if (c) c.textContent = sesLabel(s); setCur(s); }
+    var co = s.ot ? null : carryOver(m, s); if (co) { var pk = box.querySelector('.pickdet'); if (pk) box.insertBefore(co, pk); else box.append(co); }
+    var recBody = h('div', { class: 'recbody' });
+    box.append(recBody);
+    var infoGrid = h('div', { class: 'fgrid' },
       s.ot ? null : fld(m, s, 'no', '회차', { log: true, num: true, after: updChip }),
       fld(m, s, 'date', '날짜', { log: true, type: 'date', after: function () { updChip(); if (s.ot) syncOtDate(m); } }),
       s.ot ? fld(m, s, 'time', '시간', { type: 'time', after: updChip }) : null,
       scaleFld(m, s, 'cond', '컨디션 (0~10, 눌러서 선택)'),
       s.ot ? null : svcField(m, s),
       fld(m, s, 'memo', '수업 메모 (통증 · 불편 · 총평 · 다음 수업 계획) — 회원에게 보이지 않아요', { ta: true, wide: true, log: true }),
-      fld(m, s, 'msg', '회원에게 한마디 (수업 카드에 들어가요)', { ta: true, wide: true, log: true }))));
+      fld(m, s, 'msg', '회원에게 한마디 (수업 카드에 들어가요)', { ta: true, wide: true, log: true }));
+    function infoLabel() { return (s.ot ? 'OT ' + (s.otNo || '') + ' ' : '') + '수업 정보' + (s.date ? ' · ' + fmtShort(s.date) : '') + (s.cond !== '' && s.cond != null ? ' · 컨디션 ' + s.cond : '') + (String(s.memo || '').trim() ? ' · 메모 있음' : ''); }
+    foldSeq++;
+    var itx = h('span', { class: 'stx' }, infoLabel()), isum = h('summary', null, h('span', { class: 'no' }, '1'), itx);
+    var infoDet = h('details', { class: 'sub' }, isum, infoGrid);
+    infoDet.open = !!state.infoOpen; infoDet.addEventListener('toggle', function () { state.infoOpen = infoDet.open; });
+    infoDet.addEventListener('input', function () { itx.textContent = infoLabel(); });
+    infoDet.addEventListener('click', function () { setTimeout(function () { itx.textContent = infoLabel(); }, 0); });
+    recBody.append(infoDet);
 
     if (only) box.append(h('div', { style: 'margin-bottom:12px' }, dangerBtn('이 OT 회차 삭제', function () {
       var i = m.sessions.indexOf(s); if (i < 0) return;
       m.sessions.splice(i, 1); syncOtDate(m); state.sesSel[m.id] = null; touch(m); renderDetail();
       toast('OT 회차를 삭제했어요', function () { m.sessions.splice(i, 0, s); syncOtDate(m); touch(m); renderDetail(); });
     })));
+    var exDock = h('div'); recBody.append(exDock);
     var sumBox = h('div'), sumTimer;
     function paintSum() {
       sumBox.replaceChildren();
       var st = sessionStats(s);
-      if (!st.list.length) { sumBox.append(card('이 수업 요약', '운동을 적으면 운동한 부위와 부위별 운동량이 여기에 정리돼요.')); return; }
+      if (!st.list.length) { sumBox.append(h('div', { class: 'muted sub' }, '수업 요약 · 운동을 적으면 운동한 부위와 부위별 운동량이 여기에 정리돼요.')); return; }
       var rows = st.list.map(function (e) {
         return h('tr', null, h('td', { class: 'txt' }, e.part), h('td', { class: 'txt' }, e.ex.join(', ')), h('td', { class: 'txt' }, e.sets ? e.sets + '세트' : '–'), h('td', { class: 'txt' }, e.hasVol ? fmtVol(e.vol) + 'kg' : '–'));
       });
       rows.push(h('tr', { class: 'sumrow' }, h('th', { class: 'rowh' }, '합계'), h('td', { class: 'txt' }, '운동 ' + st.total.ex + '개'), h('td', { class: 'txt' }, st.total.sets ? st.total.sets + '세트' : '–'), h('td', { class: 'txt' }, st.total.hasVol ? fmtVol(st.total.vol) + 'kg' : '–')));
-      sumBox.append(card('이 수업 요약', '운동한 부위와 부위별 운동량이에요. 적은 운동에서 자동으로 계산돼요.',
+      sumBox.append(subfold('수업 요약', '운동한 부위와 부위별 운동량이에요. 적은 운동에서 자동으로 계산돼요.',
         h('div', { class: 'grp', style: 'margin-top:0' }, '오늘 운동한 부위'),
         h('div', { class: 'chips' }, st.list.map(function (e) { return h('span', { class: 'tag' }, e.part); })),
         h('div', { class: 'tblwrap' }, h('table', { class: 'grid', style: 'min-width:460px' },
@@ -1694,7 +2243,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     }
     function later() { clearTimeout(sumTimer); sumTimer = setTimeout(paintSum, 300); }
     paintSum();
-    box.append(sumBox);
+    recBody.append(sumBox);
 
     var list = h('div');
     var run = {}, li = 0, letterIdx = 0;
@@ -1711,6 +2260,15 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       var inputs = {}, cardRpe = rpeBar(m, it);
       var hint = h('div', { class: 'muted hint' });
       function setHint() { var t = hintText(m, s, it); hint.textContent = t; hint.hidden = !t; }
+      function pmemo(item) {
+        var P = pastMemos(m, s, item, 2); if (!P.length) return null;
+        var total = pastMemos(m, s, item, 999).length;
+        var d = h('details', { class: 'pmemo' }, h('summary', null, '지난 메모 ' + total + '개'));
+        var b = h('div', { class: 'cbody' });
+        P.forEach(function (r) { b.append(h('div', { class: 'pm' }, h('b', null, (r.no ? r.no + '회차 ' : '') + (r.date ? '(' + fmtShort(r.date) + ')' : '')), h('span', null, r.fb))); });
+        if (total > P.length) b.append(h('button', { class: 'memogo', type: 'button', onClick: function () { state.memoF[m.id] = { kind: 'fb', ex: exKey(item.ex), q: '', n: 30 }; goSub('memos'); } }, '전체 ' + total + '개 보기 ›'));
+        d.append(b); return d;
+      }
       var partIn = h('input', { class: 'in', type: 'text', list: 'partlist', placeholder: '예: 하체', value: it.part || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '부위',
         onInput: function (e) { it.part = e.target.value; touch(m, 'log'); later(); } });
       var exIn = h('input', { class: 'in', type: 'text', list: 'exlist', placeholder: '운동 이름을 직접 적거나 고르세요', value: it.ex || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '운동',
@@ -1788,14 +2346,16 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         cardRpe,
         mdet,
         hint,
+        pmemo(it),
         h('label', { class: 'f', style: 'margin-top:10px' }, h('span', null, '피드백'), fb)));
       setHint();
     });
-    box.append(card('한 운동 · 피드백', '한 수업에서 한 운동을 순서대로 적어요. 운동을 고르면 지난 기록이 아래에 보여요.', list,
+    exDock.append(subfold('운동 기록', '한 수업에서 한 운동을 순서대로 적어요. 운동을 고르면 지난 기록이 아래에 보여요.', list,
       h('button', { class: 'btn sm addrow', type: 'button', onClick: function () {
         var last = s.items[s.items.length - 1];
         s.items.push(blankItem(last ? last.part : '')); touch(m, 'log'); renderDetail({ t: 'sesitem', r: s.items.length - 1 });
       } }, '+ 운동 추가')));
+    if (!s.ot) recBody.append(todoCard(m, s));
     box.append(h('div', { class: 'footrow' }, dangerBtn('이 회차 삭제', function () {
       var i = m.sessions.indexOf(s), removed = m.sessions.splice(i, 1)[0];
       state.sesSel[m.id] = null; touch(m, 'log'); renderDetail();
@@ -2051,7 +2611,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       m.contracts.push({ id: uid(), date: draft.date || today(), amount: draft.amount, method: draft.method, paid: draft.paid, service: draft.service, memo: draft.memo });
       delete state.cDraft[m.id]; touch(m); renderDetail(); toast('결제 내역을 추가했어요');
     } }, '+ 추가하기');
-    box.append(tiles, card('새 등록 · 결제', '결제가 있을 때마다 한 건씩 추가해요. 서비스 PT만 따로 추가해도 돼요 (금액 0).', form, addBtn), card('등록 · 결제 내역', '눌러서 펼치면 고칠 수 있어요.', listBox));
+    box.append(tiles, fold('새 등록 · 결제', '결제가 있을 때마다 한 건씩 추가해요. 서비스 PT만 따로 추가해도 돼요 (금액 0).', form, addBtn), card('등록 · 결제 내역', '눌러서 펼치면 고칠 수 있어요.', listBox));
     return box;
   }
 
@@ -2319,7 +2879,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
   function otConsult(m) {
     var o = m.ot, p = m.profile;
-    return card('상담 메모', '‘프로필 · 목표’ 탭과 같은 칸이에요.', h('div', { class: 'fgrid' },
+    return fold('상담 메모', '‘프로필 · 목표’ 탭과 같은 칸이에요.', h('div', { class: 'fgrid' },
       fld(m, p, 'reason', '등록 계기 · 목표의 이유 (회원 말 그대로)', { ta: true, wide: true }),
       fld(m, o, 'concern', '망설이는 점 (비용 · 시간 등) — 회원에게 보이지 않아요', { ta: true, wide: true })));
   }
@@ -2414,7 +2974,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       if (!o.rm.length) box.append(h('div', { class: 'muted', style: 'margin-bottom:8px' }, '측정하지 않았으면 비워 두세요. 리포트에서 빠져요.'));
     }
     paintR();
-    return card('1RM 평가 (간접 측정)', '3~10회 정도 들 수 있는 무게로 최대한 반복한 기록을 넣으면 1회 최대 중량을 추정해요. 안전을 위해 직접 최대 중량을 들지 않아도 돼요.', box,
+    return fold('1RM 평가 (간접 측정)', '3~10회 정도 들 수 있는 무게로 최대한 반복한 기록을 넣으면 1회 최대 중량을 추정해요. 안전을 위해 직접 최대 중량을 들지 않아도 돼요.', box,
       h('div', { class: 'row', style: 'display:flex;gap:8px;flex-wrap:wrap' },
         h('button', { class: 'btn', type: 'button', onClick: function () {
           var have = {}; o.rm.forEach(function (r) { have[r.ex] = 1; });
@@ -2437,7 +2997,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     var dateIn = h('input', { class: 'in', type: 'date', value: rec ? rec.date || '' : (o.date || today()), 'aria-label': '측정일', onInput: function (e) { put('date', e.target.value); } });
     var memo = h('textarea', { class: 'ta', rows: 3, placeholder: '눈바디 · 메모 (예: 허리 라인이 말려 있어요, 어깨가 앞으로 나와 있어요)', 'aria-label': '눈바디 메모', onInput: function (e) { put('note', e.target.value); } });
     memo.value = rec ? rec.note || '' : '';
-    return card('인바디', 'OT 때 잰 값을 바로 적어요. 리포트에 들어가고, PT로 전환하면 ‘변화’ 탭의 기록으로 이어져요.',
+    return fold('인바디', 'OT 때 잰 값을 바로 적어요. 리포트에 들어가고, PT로 전환하면 ‘변화’ 탭의 기록으로 이어져요.',
       h('div', { class: 'bform' },
         h('label', { class: 'f bdate' }, h('span', null, '측정일'), dateIn),
         h('div', { class: 'bnums' }, numIn('weight', '체중', 'kg'), numIn('muscle', '골격근량', 'kg'), numIn('fat', '체지방량', 'kg'), numIn('fatPct', '체지방률', '%'), numIn('abd', '복부비만', '')),
@@ -2453,7 +3013,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
   function otSummary(m) {
     var o = m.ot;
-    return card('총평 · 추천', '리포트의 핵심이에요. 평가에서 나온 개선점이 PT로 어떻게 해결되는지 보이게 적으면 좋아요. 다 적었으면 위의 ‘PDF로 저장’으로 리포트를 만들어요.', h('div', { class: 'fgrid' },
+    return fold('총평 · 추천', '리포트의 핵심이에요. 평가에서 나온 개선점이 PT로 어떻게 해결되는지 보이게 적으면 좋아요. 다 적었으면 위의 ‘PDF로 저장’으로 리포트를 만들어요.', h('div', { class: 'fgrid' },
       fld(m, o, 'summary', '총평 (잘하는 점 · 개선할 점)', { ta: true, wide: true }),
       fld(m, o, 'plan', '추천 프로그램 방향 (기간별로)', { ta: true, wide: true }),
       fld(m, o, 'freq', '추천 빈도', { ph: '예: 주 2회' }),
@@ -2481,16 +3041,16 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     function paintType() { typeWrap.replaceChildren(); CONTACT_TYPES.forEach(function (t) { typeWrap.append(h('button', { class: 'chip big' + (draft.type === t ? ' on' : ''), type: 'button', onClick: function () { draft.type = t; paintType(); } }, t)); }); }
     paintType();
     var memo = h('input', { class: 'in', type: 'text', placeholder: '메모 (예: 가격 문의, 다음 주 결정)', autocomplete: 'off', onInput: function (e) { draft.memo = e.target.value; } });
-    box.append(card('후속 연락', '리포트를 보낸 뒤 연락한 내용을 남겨요. 재연락 예정일을 넣어 두면 ‘이번 달’ 화면에 연락할 사람으로 떠요.',
+    box.append(fold('후속 연락', '리포트를 보낸 뒤 연락한 내용을 남겨요. 재연락 예정일을 넣어 두면 ‘이번 달’ 화면에 연락할 사람으로 떠요.',
       h('div', { class: 'fgrid' }, fld(m, o, 'follow', '다음 연락 예정일', { type: 'date' }))),
-      card('연락 기록 추가', null, h('div', { class: 'cform' },
+      fold('연락 기록 추가', null, h('div', { class: 'cform' },
         h('label', { class: 'f' }, h('span', null, '날짜'), h('input', { class: 'in', type: 'date', value: draft.date, onInput: function (e) { draft.date = e.target.value; } })),
         h('div', { class: 'f' }, h('span', null, '방법'), typeWrap),
         h('label', { class: 'f' }, h('span', null, '메모'), memo)),
         h('button', { class: 'btn primary', type: 'button', style: 'min-height:48px', onClick: function () {
           o.contacts.push({ id: uid(), date: draft.date || today(), type: draft.type, memo: draft.memo }); touch(m); renderDetail(); toast('연락 기록을 남겼어요');
         } }, '+ 기록 남기기')),
-      card('연락 기록', null, logBox));
+      fold('연락 기록', null, logBox));
     return box;
   }
   function otTab(m, tab) {
@@ -2540,30 +3100,46 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       return h('div', { class: 'card placeholder' }, state.loaded ? (state.hideList ? '회원 목록이 숨겨져 있어요. 위의 ‘목록 보기’를 누르면 회원을 고를 수 있어요.' : Object.keys(state.members).length ? '왼쪽에서 회원을 선택해 주세요.' : '회원을 추가하면 여기에 노트가 열려요.') : '불러오는 중…');
     }
     var box = h('div');
-    box.append(h('div', { class: 'dhead' },
+    var dh = h('div', { class: 'dhead' },
       h('button', { class: 'btn only-narrow', type: 'button', onClick: function () { state.view = 'list'; $('#layout').dataset.view = 'list'; window.scrollTo(0, 0); } }, '← 목록'),
       h('input', { class: 'in title', type: 'text', value: m.name || '', placeholder: '회원 이름', 'aria-label': '회원 이름', autocomplete: 'off',
-        onInput: function (e) { m.name = e.target.value; touch(m); renderList(); } })));
-    box.append(h('div', { class: 'muted' }, '블록 ' + m.blocks.length + '개 · 주간 로그 ' + m.weeks.length + '개 · 인바디 ' + m.body.length + '회 · 수업 ' + m.sessions.filter(function (x) { return !x.ot; }).length + '회'));
-    var tabs = m.status === 'ot'
-      ? [['otc', '상담 · 프로필'], ['ota', '평가'], ['otl', 'OT 수업'], ['otf', '후속 연락'], ['otr', '리포트']]
-      : [['profile', '프로필 · 목표'], ['program', '프로그램'], ['records', '수업 일지'], ['change', '변화'], ['ot', 'OT 기록'], ['contracts', '등록 · 결제']];
-    if (m.status === 'ot' && !tabs.some(function (t) { return t[0] === state.tab; })) state.tab = 'otc';
-    var inChange = state.tab === 'change' || state.tab === 'weeks' || state.tab === 'report';
-    box.append(h('div', { class: 'tabs', role: 'tablist' }, tabs.map(function (t) {
-      var on = t[0] === 'change' ? (m.status !== 'ot' && inChange) : state.tab === t[0];
-      return h('button', { class: 'tab' + (on ? ' on' : ''), type: 'button', role: 'tab', 'aria-selected': on ? 'true' : 'false',
-        onClick: function () { state.tab = t[0]; state.addBlock = false; if (window.SPO) SPO.track('tab_' + t[0]); renderDetail(); } }, t[1]);
-    })));
-    if (m.status !== 'ot' && inChange) {
-      var cur = state.tab === 'weeks' ? 'weeks' : state.tab === 'report' ? 'report' : state.chView;
-      box.append(chips([['body', '몸 (인바디 · 눈바디)'], ['exercise', '운동 (중량 · 세트 · 횟수)'], ['weeks', '주간 로그'], ['report', '월간 보고']], cur, function (k) {
-        if (k === 'weeks' || k === 'report') state.tab = k; else { state.tab = 'change'; state.chView = k; }
-        state.addBlock = false; renderDetail();
-      }));
+        onInput: function (e) { m.name = e.target.value; touch(m); renderList(); } }));
+    box.append(dh);
+    box.append(h('div', { class: 'muted' }, '프로그램 ' + m.blocks.length + '개 · 주간 로그 ' + m.weeks.length + '개 · 인바디 ' + m.body.length + '회 · 수업 ' + m.sessions.filter(function (x) { return !x.ot; }).length + '회'));
+    var isOt = m.status === 'ot';
+    var tabs = isOt ? [['otc', '상담 · 프로필'], ['ota', '평가'], ['otl', 'OT 수업'], ['otf', '후속 연락'], ['otr', '리포트']] : null;
+    if (isOt && !tabs.some(function (t) { return t[0] === state.tab; })) state.tab = 'otc';
+    /* PT 회원: 탭 8개를 4묶음으로. 묶음 안의 세부 항목은 아래 줄에 칩으로 보여요. */
+    var GROUPS = [
+      { id: 'info', label: '회원 정보', subs: [['profile', '프로필 · 목표'], ['ot', 'OT 기록']] },
+      { id: 'lesson', label: '수업', subs: [['records', '수업 일지'], ['plan', '프로그램'], ['memos', '메모 로그']] },
+      { id: 'change', label: '변화', subs: [['body', '몸'], ['exercise', '운동'], ['weeks', '주간'], ['report', '월간']] },
+      { id: 'pay', label: '등록 · 결제', subs: [['contracts', '등록 · 결제']] }
+    ];
+    function subKey(t) { return t === 'change' ? state.chView : t; }
+    function groupOf(t) { var k = subKey(t); for (var gi = 0; gi < GROUPS.length; gi++) if (GROUPS[gi].subs.some(function (x) { return x[0] === k; })) return GROUPS[gi]; return GROUPS[0]; }
+    goSubFn = goSub;
+    function goSub(k) { if (window.SPO) SPO.track('tab_' + k); if (k === 'body' || k === 'exercise') { state.tab = 'change'; state.chView = k; } else state.tab = k; state.addBlock = false; renderDetail(); }
+    state.grpLast = state.grpLast || {};
+    if (isOt) {
+      box.append(h('div', { class: 'tabs', role: 'tablist' }, tabs.map(function (t) {
+        var on = state.tab === t[0];
+        return h('button', { class: 'tab' + (on ? ' on' : ''), type: 'button', role: 'tab', 'aria-selected': on ? 'true' : 'false',
+          onClick: function () { state.tab = t[0]; state.addBlock = false; if (window.SPO) SPO.track('tab_' + t[0]); renderDetail(); } }, t[1]);
+      })));
+    } else {
+      var curG = groupOf(state.tab); state.grpLast[curG.id] = subKey(state.tab);
+      box.append(h('div', { class: 'tabs', role: 'tablist' }, GROUPS.map(function (g) {
+        var on = g === curG;
+        return h('button', { class: 'tab' + (on ? ' on' : ''), type: 'button', role: 'tab', 'aria-selected': on ? 'true' : 'false',
+          onClick: function () { goSub(state.grpLast[g.id] || g.subs[0][0]); } }, g.label);
+      })));
+      if (curG.subs.length > 1) box.append(segBar(curG.subs, subKey(state.tab), goSub));
     }
-    box.append(exportBar(m));
-    box.append(state.tab === 'program' ? programTab(m) : state.tab === 'weeks' ? weeksTab(m) : state.tab === 'report' ? reportTab(m) : state.tab === 'contracts' ? contractsTab(m) : /^ot/.test(state.tab) ? otTab(m, state.tab) : state.tab === 'change' ? changeTab(m) : state.tab === 'records' ? recordsTab(m) : profileTab(m));
+    var eb0 = exportBar(m), mn0 = eb0.querySelector('.exmenu');
+    if (mn0) dh.append(mn0);
+    box.append(eb0);
+    box.append(state.tab === 'plan' ? planTab(m) : state.tab === 'program' ? programTab(m) : state.tab === 'memos' ? memosTab(m) : state.tab === 'weeks' ? weeksTab(m) : state.tab === 'report' ? reportTab(m) : state.tab === 'contracts' ? contractsTab(m) : /^ot/.test(state.tab) ? otTab(m, state.tab) : state.tab === 'change' ? changeTab(m) : state.tab === 'records' ? recordsTab(m) : profileTab(m));
     return box;
   }
 
@@ -2698,7 +3274,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     Object.keys(m.reports || {}).forEach(function (k) { var v = m.reports[k]; if (v && v.from > 0 && v.to >= v.from && ((v.summary || '').trim() || (v.next || '').trim())) { seen[k] = true; pre.push({ from: v.from, to: v.to, saved: true }); } });
     cs.forEach(function (x) { var k = x.from + '-' + x.to; if (!seen[k]) { seen[k] = true; pre.push({ from: x.from, to: x.to }); } });
     pre.sort(function (a, b) { return a.from - b.from; });
-    box.append(card('보고서 범위', '몇 회차부터 몇 회차까지 보고서로 만들지 정해요. 수업 일지의 회차 번호 기준이고, 마지막 회차는 ' + mx + '회예요.',
+    box.append(fold('보고서 범위', '몇 회차부터 몇 회차까지 보고서로 만들지 정해요. 수업 일지의 회차 번호 기준이고, 마지막 회차는 ' + mx + '회예요.',
       h('div', { class: 'rangerow' }, fIn, h('span', null, '회 ~'), tIn, h('span', null, '회'), h('button', { class: 'btn sm primary', type: 'button', onClick: apply }, '적용')),
       h('div', { class: 'muted', style: 'margin:10px 0 6px' }, '빠른 선택 (총평을 써 둔 범위는 ✓)'),
       h('div', { class: 'chips', style: 'margin-bottom:0' }, pre.map(function (x) {
@@ -2706,12 +3282,12 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         return h('button', { class: 'chip sm' + (on ? ' on' : ''), type: 'button', onClick: function () { state.repSel[m.id] = { from: x.from, to: x.to }; renderDetail(); } }, (x.saved ? '✓ ' : '') + x.from + '~' + x.to + '회');
       }))));
     var stat = function (k, v, u, d) { return h('div', { class: 'stat' }, h('div', { class: 'k' }, k), h('div', { class: 'v' }, v, u ? h('small', null, u) : null), h('div', { class: 'd' }, d)); };
-    box.append(card('이번 기간 요약', null, h('div', { class: 'stats' },
+    box.append(fold('이번 기간 요약', null, h('div', { class: 'stats' },
       stat('수업', String(D.n), '회', D.nos.length ? D.nos[0] + '~' + D.nos[D.nos.length - 1] + '회차' : ''),
       stat('기간', D.weeks + '', '주', fmtD(c.start).slice(5) + ' ~ ' + fmtD(c.last).slice(5)),
       stat('주 평균', String(D.perWeek), '회', '실제 수업 기준'),
       stat('컨디션', isFinite(D.cond) ? String(D.cond) : '–', isFinite(D.cond) ? '/10' : '', '수업 평균'))));
-    box.append(card('몸 변화', D.body.length ? '기간 시작 시점 값과 지금까지 가장 최근 값을 비교해요.' : '변화 탭에 인바디를 입력하면 여기에 나와요.',
+    box.append(fold('몸 변화', D.body.length ? '기간 시작 시점 값과 지금까지 가장 최근 값을 비교해요.' : '변화 탭에 인바디를 입력하면 여기에 나와요.',
       D.body.length ? h('div', { class: 'stats' }, D.body.map(function (b) {
         var tl = stat(b.label, isNaN(b.diff) ? fmtN(b.from) : signed(b.diff), isNaN(b.diff) ? b.unit : b.unit, isNaN(b.diff) ? '측정 1회 (' + fmtD(b.fromD).slice(5) + ')' : fmtN(b.from) + ' → ' + fmtN(b.to));
         tl.append(hlBtn(m, 'r:' + c.key, 'body:' + b.label, b.auto, tl));
@@ -2720,18 +3296,18 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     var lt = h('tbody');
     D.lifts.forEach(function (l) { var ltr = h('tr'); ltr.append(h('td', { class: 'ctl' }, hlBtn(m, 'r:' + c.key, 'lift:' + l.key, l.auto, ltr))); lt.append(ltr); ltr.append(h('td', { class: 'txt nw' }, l.name), h('td', { class: 'txt nw' }, l.part), h('td', { class: 'txt nw' }, l.times + '회'), h('td', { class: 'txt nw' }, l.first), h('td', { class: 'txt' }, l.last), h('td', { class: 'txt nw' }, isNaN(l.diff) ? '' : signed(l.diff) + 'kg')); });
     box.append(hlCard(m, 'r:' + c.key));
-    box.append(card('운동 변화', '이 기간 수업 일지에서 자동으로 정리돼요.', D.lifts.length ? h('div', { class: 'tblwrap' }, h('table', { class: 'grid', style: 'min-width:760px' },
+    box.append(fold('운동 변화', '이 기간 수업 일지에서 자동으로 정리돼요.', D.lifts.length ? h('div', { class: 'tblwrap' }, h('table', { class: 'grid', style: 'min-width:760px' },
       h('thead', null, h('tr', null, ['', '운동', '부위', '수행', '처음 기록', '마지막 기록', '중량 변화'].map(function (t, i) { return h('th', { class: i === 5 ? '' : 'nw' }, t); }))), lt)) : null,
       D.newEx.length ? (function () { var nd = h('div', { class: 'hlrow', style: 'margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:4px;border-radius:8px' }); nd.append(hlBtn(m, 'r:' + c.key, 'new', true, nd), h('span', { class: 'muted' }, '새로 배운 운동 '), h('span', null, D.newEx.join(', '))); return nd; })() : null));
     var rpc = reportPhotoCard(m, c); if (rpc) box.append(rpc);
     var pt = h('tbody');
     D.parts.forEach(function (p) { pt.append(h('tr', null, h('td', { class: 'txt nw' }, p.part), h('td', { class: 'txt nw' }, p.ex.length + '개'), h('td', { class: 'txt nw' }, p.sets ? p.sets + '세트' : ''), h('td', { class: 'txt nw' }, p.hasVol ? fmtVol(p.vol) + 'kg' : ''), h('td', { class: 'txt' }, p.ex.join(', ')))); });
-    box.append(card('부위별 운동량', null, D.parts.length ? h('div', { class: 'tblwrap' }, h('table', { class: 'grid', style: 'min-width:600px' },
+    box.append(fold('부위별 운동량', null, D.parts.length ? h('div', { class: 'tblwrap' }, h('table', { class: 'grid', style: 'min-width:600px' },
       h('thead', null, h('tr', null, ['부위', '운동 수', '세트 합계', '볼륨', '운동'].map(function (t, i) { return h('th', { class: i < 4 ? 'nw' : '' }, t); }))), pt)) : null));
-    if (D.focus.length) box.append(card('주차별 핵심', '주간 로그의 ‘다음 주 핵심’을 모았어요.', D.focus.map(function (f) { return h('div', { style: 'margin-bottom:6px' }, h('span', { class: 'muted' }, f[0] + ' '), f[1]); })));
+    if (D.focus.length) box.append(fold('주차별 핵심', '주간 로그의 ‘다음 주 핵심’을 모았어요.', D.focus.map(function (f) { return h('div', { style: 'margin-bottom:6px' }, h('span', { class: 'muted' }, f[0] + ' '), f[1]); })));
     var rep = (m.reports && m.reports[c.key]) || { summary: '', next: '' };
     function ensure() { if (!m.reports) m.reports = {}; if (!m.reports[c.key]) m.reports[c.key] = rep; rep.from = c.from; rep.to = c.to; }
-    box.append(card('트레이너 총평 · 다음 목표', '이 두 칸만 직접 적어요. PDF에 함께 들어가요.', h('div', { class: 'fgrid' },
+    box.append(fold('트레이너 총평 · 다음 목표', '이 두 칸만 직접 적어요. PDF에 함께 들어가요.', h('div', { class: 'fgrid' },
       fld(m, rep, 'summary', '이번 기간 총평', { ta: true, wide: true, log: true, after: ensure }),
       fld(m, rep, 'next', '다음 기간 목표', { ta: true, wide: true, log: true, after: ensure }))));
     return box;
@@ -2809,7 +3385,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     document.body.append(ov);
   }
   function photoCard(m) {
-    var wrap = card('눈바디 사진', '수업 중에 찍거나 앨범에서 골라 넣으면, 같은 각도끼리 처음과 가장 최근 사진을 자동으로 나란히 보여 줘요.');
+    var wrap = fold('눈바디 사진', '수업 중에 찍거나 앨범에서 골라 넣으면, 같은 각도끼리 처음과 가장 최근 사진을 자동으로 나란히 보여 줘요.');
     var body = h('div'); wrap.append(body);
     function paint() {
       body.replaceChildren();
@@ -3055,7 +3631,8 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   function docProgram(m) {
     var bid = state.blockSel[m.id], b = m.blocks.filter(function (x) { return x.id === bid; })[0] || m.blocks[m.blocks.length - 1];
     if (!b) return null;
-    var B = [], info = kvRows([['기간', b.period], ['블록 목표', b.goal], ['선택 근거', b.basis], ['주간 분할', b.split]]);
+    ensurePlan(b);
+    var B = [], info = kvRows([['단계', b.phase], ['기간', b.period], ['프로그램 목표', b.goal], ['선택 근거', b.basis], ['주간 분할', b.split]]);
     if (info.length) B.push({ t: 'kv', rows: info });
     b.days.forEach(function (d) {
       var rows = d.rows.filter(function (r) { return EX_COLS.some(function (c) { return String(r[c.key] || '').trim(); }); })
@@ -3064,7 +3641,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       B.push({ t: 'h1', text: d.name || 'Day' });
       B.push(rows.length ? { t: 'table', head: ['운동명', '세트×반복', 'RPE·RIR', '템포', '휴식', '무게', '큐잉 포인트', '대체 운동'], rows: rows, w: [2.4, 1.2, 1, 1, 1, 1.1, 2.2, 1.6] } : { t: 'note', text: '운동을 아직 적지 않았어요.' });
     });
-    var rules = kvRows([['진행 규칙', b.rule], ['주의 · 중단 기준 / 셀프 운동', b.caution]]);
+    var rules = kvRows([['진행 규칙', b.rule], ['재평가 시점', b.prog.reeval], ['디로드 주기', b.prog.deload], ['금기 운동', b.safe.banned], ['주의 · 중단 기준 / 셀프 운동', b.caution]]);
     if (rules.length) { B.push({ t: 'h1', text: '진행 규칙 · 주의' }); B.push({ t: 'kv', rows: rules }); }
     return { title: (m.name || '회원') + ' · 운동 프로그램' + (b.name ? ' (' + b.name + ')' : ''), label: '운동프로그램' + (b.name ? '_' + b.name : ''), blocks: B };
   }
@@ -3106,8 +3683,8 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     });
     B.push({ t: 'h1', text: '변화 요약' });
     B.push(exTable(['항목', '처음', '가장 최근', '변화'], sum, [1.4, 1.6, 1.6, 1]));
-    B.push({ t: 'h1', text: '인바디 · 눈바디 기록' });
-    B.push({ t: 'table', head: ['날짜', '체중(kg)', '골격근량(kg)', '체지방량(kg)', '체지방률(%)', '복부비만', '눈바디 · 메모'], rows: rows.map(function (r) { return [fmtD(r.date), r.weight, r.muscle, r.fat, r.fatPct, r.abd, r.note]; }), w: [1.5, 1, 1.2, 1.2, 1.2, 1, 2.6] });
+    B.push({ t: 'h1', text: '인바디 기록' });
+    B.push({ t: 'table', head: ['날짜', '체중(kg)', '골격근량(kg)', '체지방량(kg)', '체지방률(%)', '복부비만', '메모'], rows: rows.map(function (r) { return [fmtD(r.date), r.weight, r.muscle, r.fat, r.fatPct, r.abd, r.note]; }), w: [1.5, 1, 1.2, 1.2, 1.2, 1, 2.6] });
     if (m.photoConsent) { var bp = photoPairs(m, '', '9999-12-31'); if (bp.length) B.push({ t: 'photos', title: '눈바디 전후', pairs: bp.map(function (x) { return { label: x.label, a: { url: photoUrl(x.a), date: x.a.date }, b: { url: photoUrl(x.b), date: x.b.date } }; }) }); }
     return { title: (m.name || '회원') + ' · 몸 변화', label: '변화_몸', blocks: compact(B) };
   }
@@ -3191,7 +3768,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   function buildExportDoc(m) {
     var key = m.id + ':' + state.tab, all = state.expScope[key] === 'all';
     var d = state.tab === 'profile' ? docProfile(m, state.expInternal)
-      : state.tab === 'program' ? docProgram(m)
+      : state.tab === 'program' || state.tab === 'plan' ? docProgram(m)
       : state.tab === 'records' ? docSessions(m, all)
       : state.tab === 'change' ? (state.chView === 'exercise' ? docExercises(m) : docBody(m))
       : state.tab === 'report' ? docReport(m)
@@ -3404,15 +3981,35 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
   function exportBar(m) {
     if (state.tab === 'otl') { var cb = h('button', { class: 'btn sm', type: 'button', onClick: function () { openLessonCard(m, cb); } }, 'OT 수업 카드(사진)'); return h('div', { class: 'exwrap' }, h('div', { class: 'exbar' }, cb), h('div', { class: 'muted exhint' }, '선택한 OT 회차를 사진 카드로 만들어 카톡·문자로 보낼 수 있어요.')); }
-    if (state.tab === 'contracts' || state.tab === 'otc' || state.tab === 'ota' || state.tab === 'otf') return h('div');
+    if (state.tab === 'memos' || state.tab === 'contracts' || state.tab === 'otc' || state.tab === 'ota' || state.tab === 'otf') return h('div');
     var wrap = h('div', { class: 'exwrap' }), bar = h('div', { class: 'exbar' }), holder = h('div');
     var key = m.id + ':' + state.tab, opts = state.tab === 'records' ? [['one', '이 회차'], ['all', '전체 회차']] : state.tab === 'weeks' ? [['one', '이 주'], ['all', '전체 주']] : null;
-    var pdfBtn = h('button', { class: 'btn sm primary', type: 'button', onClick: function () { savePdf(m, pdfBtn); } }, 'PDF로 저장');
-    bar.append(pdfBtn, h('button', { class: 'btn sm', type: 'button', onClick: function () { copyDoc(m, holder); } }, '텍스트 복사'));
-    if (state.tab === 'records') { var cardBtn = h('button', { class: 'btn sm', type: 'button', onClick: function () { openLessonCard(m, cardBtn); } }, '수업 카드(사진)'); bar.append(cardBtn); }
-    if (opts) bar.append(chips(opts, state.expScope[key] || 'one', function (k) { state.expScope[key] = k; renderDetail(); }));
-    if (state.tab === 'profile' || state.tab === 'ot' || state.tab === 'otr') bar.append(h('button', { class: 'chip sm' + (state.expInternal ? ' on' : ''), type: 'button', 'aria-pressed': state.expInternal ? 'true' : 'false', onClick: function () { state.expInternal = !state.expInternal; renderDetail(); } }, state.tab !== 'profile' ? '내부 메모 포함 (망설이는 점·통증)' : '병력 · 통증 · 메모 포함'));
-    wrap.append(bar, h('div', { class: 'muted exhint' }, 'PDF는 회원에게 카톡·인쇄용, 텍스트 복사는 Claude에게 붙여넣어 프로그램을 만들 때 쓰세요.' + (state.tab === 'profile' && !state.expInternal ? ' 병력·통증·복용 약·메모는 빠져 있어요.' : '') + ((state.tab === 'ot' || state.tab === 'otr') ? ' OT 리포트는 수업이 끝난 뒤 회원에게 PDF로 보내 주세요. 망설이는 점 같은 내부 메모는 빠져 있어요.' : '')), holder);
+    var menu = h('details', { class: 'exmenu' }), list = h('div', { class: 'exlist' });
+    var pdfBtn = h('button', { class: 'exitem', type: 'button', onClick: function () { menu.open = false; savePdf(m, pdfBtn); } }, 'PDF로 저장');
+    list.append(pdfBtn, h('button', { class: 'exitem', type: 'button', onClick: function () { menu.open = false; copyDoc(m, holder); } }, '텍스트 복사'));
+    if (state.tab === 'records') { var cardBtn = h('button', { class: 'exitem', type: 'button', onClick: function () { menu.open = false; openLessonCard(m, cardBtn); } }, '수업 카드(사진)'); list.append(cardBtn); }
+    if (opts) {
+      var scopeRow = h('div', { class: 'exscope', role: 'radiogroup', 'aria-label': '내보낼 범위' }, h('span', { class: 'exslab' }, '내보낼 범위'));
+      opts.forEach(function (o) {
+        scopeRow.append(h('label', { class: 'exsopt' }, h('input', { type: 'radio', name: 'exs-' + key, checked: (state.expScope[key] || 'one') === o[0], onChange: function () { state.expScope[key] = o[0]; } }), h('span', null, o[1])));
+      });
+      list.append(scopeRow);
+    }
+    var exn = h('div', { class: 'exnote' });
+    function setNote() {
+      exn.textContent = 'PDF는 회원에게 카톡·인쇄용, 텍스트 복사는 Claude에게 붙여넣어 프로그램을 만들 때 쓰세요.' + (state.tab === 'profile' && !state.expInternal ? ' 병력·통증·복용 약·메모는 빠져 있어요.' : '') + ((state.tab === 'ot' || state.tab === 'otr') ? ' OT 리포트는 수업이 끝난 뒤 회원에게 PDF로 보내 주세요.' + (state.expInternal ? '' : ' 망설이는 점 같은 내부 메모는 빠져 있어요.') : '');
+    }
+    if (state.tab === 'profile' || state.tab === 'ot' || state.tab === 'otr') {
+      list.append(h('label', { class: 'exitem extoggle' },
+        h('input', { type: 'checkbox', checked: !!state.expInternal, onChange: function (e) { state.expInternal = e.target.checked; setNote(); } }),
+        h('span', null, state.tab !== 'profile' ? '내부 메모 포함 (망설이는 점 · 통증)' : '병력 · 통증 · 메모 포함')));
+    }
+    setNote();
+    list.append(exn);
+    menu.append(h('summary', { class: 'btn sm exsum' }, '내보내기 ▾'), list);
+    if (!window.__exOut) { window.__exOut = true; document.addEventListener('click', function (e) { var d = document.querySelector('details.exmenu[open]'); if (d && !d.contains(e.target)) d.open = false; }); }
+    bar.append(menu);
+    wrap.append(bar, holder);
     return wrap;
   }
 
@@ -3463,7 +4060,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
   function addSample() {
     Object.keys(state.members).forEach(function (id) { if (state.members[id].name === SAMPLE_NAME) removeMember(id); });
-    var m = sampleMember();
+    var m = norm(sampleMember());
     state.members[m.id] = m; touch(m); state.listTab = 'active';
     state.sheet = false; renderSheet(); select(m.id);
     toast('예시 회원을 새로 만들었어요');
@@ -3709,7 +4306,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
 /* ===================== standalone adapter (Firebase) ===================== */
 var CFG = window.SPO_FIREBASE, FB = window.firebase;
-var CONSENT_VER = '2026-10-01', APP_VER = '2026-10-01', APP_NAME = '스포차트';
+var CONSENT_VER = '2026-10-01', APP_VER = '2026-10-06', APP_NAME = '스포차트';
 var SPO = window.SPO = {};
 /* 공지: 문구를 바꾸고 NOTICE_ID를 새 값으로 바꾸면, 닫았던 사람에게도 다시 보여요. */
 var NOTICE_ID = 'beta-1';
@@ -3728,7 +4325,7 @@ SPO.noticeBanner = function () {
   return box;
 };
 var dbf = null, auth = null, me = null, myProfile = null, isAdmin = false, statsOK = false;
-var TAB_LABELS = { profile: '프로필·목표', program: '프로그램', records: '수업 일지', change: '변화', weeks: '주간 로그', report: '월간 보고', ot: 'OT 기록', contracts: '등록·결제', otc: 'OT 상담', ota: 'OT 평가', otl: 'OT 수업', otf: 'OT 후속연락', otr: 'OT 리포트' };
+var TAB_LABELS = { profile: '프로필·목표', program: '프로그램(이전)', plan: '프로그램', memos: '메모 로그', body: '변화·몸', exercise: '변화·운동', records: '수업 일지', change: '변화', weeks: '주간 로그', report: '월간 보고', ot: 'OT 기록', contracts: '등록·결제', otc: 'OT 상담', ota: 'OT 평가', otl: 'OT 수업', otf: 'OT 후속연락', otr: 'OT 리포트' };
 var FEAT_LABELS = { 'export_pdf': 'PDF 저장', 'lesson_card': '수업 카드', 'history_popup': '지난 기록 팝업', 'member_add_active': 'PT 회원 추가', 'member_add_ot': 'OT 회원 추가', 'ot_convert': 'OT→PT 전환' };
 function setKids(el, arr) { el.replaceChildren(); add(el, arr); }
 function ms(t) { return t && t.toMillis ? t.toMillis() : (+t || 0); }
