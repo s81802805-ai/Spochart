@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><meta name="apple-mobile-web-app-capable" content="yes"><title>스포차트</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><meta name="apple-mobile-web-app-capable" content="yes"><title>회원 노트</title>
 <style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -470,6 +470,11 @@ table.grid td input[type="date"] { min-width: 136px; }
 .monthnav .mlabel { font-size: 20px; font-weight: 700; min-width: 140px; text-align: center; }
 .monthnav .btn { min-width: 48px; min-height: 46px; }
 table.grid td.r, table.grid th.r { text-align: right; }
+.sugw{min-width:0}.sugr{display:flex;gap:4px;align-items:center}.sugr .in{flex:1;min-width:0}
+.sugb{flex:none;width:34px;height:36px;border:1px solid var(--line);background:var(--panel);color:inherit;border-radius:8px;font-size:13px;cursor:pointer;padding:0}
+.sugp{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;max-height:140px;overflow:auto}
+.sugc{border:1px solid var(--line);background:var(--panel);color:inherit;border-radius:14px;padding:4px 10px;font-size:13px;cursor:pointer}
+.sugn{font-size:12px;opacity:.6}
 .gate { position: fixed; inset: 0; z-index: 90; background: var(--bg); display: grid; place-items: start center; padding: 24px 16px; overflow: auto; }
 .gatebox { width: min(100%, 440px); background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: grid; gap: 14px; margin-block: 4vh; }
 .gatebox h1 { margin: 0; font-size: 24px; }
@@ -514,7 +519,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
 
 <div class="app">
   <header class="topbar">
-    <div class="brand" id="brand" role="button" tabindex="0" title="처음 화면으로">스포차트</div>
+    <div class="brand" id="brand" role="button" tabindex="0" title="처음 화면으로">회원 노트</div>
     <button class="pill warn" id="status" type="button">연결 중…</button>
     <button class="btn" id="toggleList" type="button" aria-pressed="false">목록 숨기기</button>
     <button class="btn" id="openMonth" type="button">매출 · 수업</button>
@@ -1346,7 +1351,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     if (r.tempo || r.cue || r.alt) more.open = true;
     return h('div', { class: 'planrow', dataset: { t: 'planrow', r: i } },
       h('div', { class: 'prhead' }, h('span', { class: 'prno' }, String(i + 1)),
-        h('input', { class: 'in prex', type: 'text', list: 'exlist', value: r.ex || '', placeholder: '운동명 (예: 스쿼트)', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '운동명',
+        h('input', { class: 'in prex', type: 'text', value: r.ex || '', placeholder: '운동명 (예: 스쿼트)', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '운동명',
           onInput: function (e) { r.ex = e.target.value; touch(m); } }),
         h('button', { class: 'ib', type: 'button', 'aria-label': '위로', disabled: i === 0, onClick: function () { var t = d.rows[i - 1]; d.rows[i - 1] = d.rows[i]; d.rows[i] = t; touch(m); renderDetail(); } }, '▲'),
         h('button', { class: 'ib', type: 'button', 'aria-label': '아래로', disabled: i === d.rows.length - 1, onClick: function () { var t = d.rows[i + 1]; d.rows[i + 1] = d.rows[i]; d.rows[i] = t; touch(m); renderDetail(); } }, '▼'),
@@ -1389,7 +1394,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         h('div', { class: 'chips' }, TEMPLATES.map(function (t) { return h('button', { class: 'chip', type: 'button', onClick: function () { applyTemplate(m, b, t); } }, t.label); }))));
     }
     /* 1 요약 */
-    var phaseIn = h('input', { class: 'in', type: 'text', list: 'phaselist', value: b.phase || '', placeholder: '단계 이름 직접 입력', autocomplete: 'off', 'aria-label': '단계', onInput: function (e) { b.phase = e.target.value; touch(m); } });
+    var phaseIn = h('input', { class: 'in', type: 'text', value: b.phase || '', placeholder: '단계 이름 직접 입력', autocomplete: 'off', 'aria-label': '단계', onInput: function (e) { b.phase = e.target.value; touch(m); } });
     var phCustom = !!(b.phase && PHASES.indexOf(b.phase) < 0), phOpen = phCustom || !!state.phCustom;
     var phChips = h('div', { class: 'chips' }, PHASES.map(function (ph) {
       return h('button', { class: 'chip sm' + (b.phase === ph ? ' on' : ''), type: 'button', onClick: function () { b.phase = b.phase === ph ? '' : ph; state.phCustom = false; touch(m); renderDetail(); } }, ph);
@@ -1968,6 +1973,24 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     document.body.append(ov);
   }
 
+  /* 입력 중에 기본 자동완성 목록(datalist)이 튀어나와 타이핑이 끊기던 문제 → ▾ 버튼을 눌렀을 때만 목록을 보여 줌 */
+  function sug(input, listId) {
+    var panel = h('div', { class: 'sugp', hidden: true });
+    var btn = h('button', { class: 'sugb', type: 'button', 'aria-label': '목록에서 고르기', tabindex: '-1', onClick: function () {
+      if (!panel.hidden) { panel.hidden = true; return; }
+      var dl = document.getElementById(listId), vals = dl ? Array.prototype.map.call(dl.options, function (o) { return o.value; }) : [];
+      panel.textContent = '';
+      if (!vals.length) panel.append(h('span', { class: 'sugn' }, '아직 목록이 없어요'));
+      vals.forEach(function (v) {
+        panel.append(h('button', { class: 'sugc', type: 'button', onClick: function () {
+          input.value = v; input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new Event('change', { bubbles: true }));
+          panel.hidden = true;
+        } }, v));
+      });
+      panel.hidden = false;
+    } }, '▾');
+    return h('div', { class: 'sugw' }, h('div', { class: 'sugr' }, input, btn), panel);
+  }
   function datalists(m) {
     var ex = {}, parts = {};
     PARTS.forEach(function (p) { parts[p] = true; });
@@ -2269,9 +2292,9 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         if (total > P.length) b.append(h('button', { class: 'memogo', type: 'button', onClick: function () { state.memoF[m.id] = { kind: 'fb', ex: exKey(item.ex), q: '', n: 30 }; goSub('memos'); } }, '전체 ' + total + '개 보기 ›'));
         d.append(b); return d;
       }
-      var partIn = h('input', { class: 'in', type: 'text', list: 'partlist', placeholder: '예: 하체', value: it.part || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '부위',
+      var partIn = h('input', { class: 'in', type: 'text', placeholder: '예: 하체', value: it.part || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '부위',
         onInput: function (e) { it.part = e.target.value; touch(m, 'log'); later(); } });
-      var exIn = h('input', { class: 'in', type: 'text', list: 'exlist', placeholder: '운동 이름을 직접 적거나 고르세요', value: it.ex || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '운동',
+      var exIn = h('input', { class: 'in', type: 'text', placeholder: '운동 이름을 직접 적거나 고르세요', value: it.ex || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '운동',
         onInput: function (e) { it.ex = e.target.value; touch(m, 'log'); later(); },
         onChange: function () {
           if (!normName(it.part)) {
@@ -2290,12 +2313,12 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       var fb = h('textarea', { class: 'ta', rows: 2, placeholder: '이 운동에서 해 준 피드백 · 관찰 (자세, 통증, 다음에 조정할 점)', value: it.feedback || '', 'aria-label': '피드백',
         onInput: function (e) { it.feedback = e.target.value; touch(m, 'log'); } });
       inputs.ex = exIn; inputs.part = partIn;
-      var exLab = h('label', { class: 'f w2' }, h('span', null, '운동'), exIn);
+      var exLab = h('label', { class: 'f w2' }, h('span', null, '운동'), sug(exIn, 'exlist'));
       exLab.dataset.t = 'sesitem'; exLab.dataset.r = String(i);
       var rn = run[i];
 
       /* set method: one exercise's own style (드롭세트 등) or a group of exercises done back to back */
-      var methIn = h('input', { class: 'in', type: 'text', list: 'methodlist', placeholder: '일반', value: it.method || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '세트법',
+      var methIn = h('input', { class: 'in', type: 'text', placeholder: '일반', value: it.method || '', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': '세트법',
         onInput: function (e) {
           var v = e.target.value; it.method = v;
           if (rn) s.items.forEach(function (x) { if (x.group === it.group) x.method = v; });
@@ -2327,7 +2350,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       var mdet = h('details', { class: 'mdet' },
         h('summary', null, '세트법 · 세트별 상세' + (it.method && it.method !== '일반' ? ' · ' + it.method : '')),
         h('div', { class: 'mbody' },
-          h('label', { class: 'f' }, h('span', null, '세트법 (목록에서 고르거나 직접 입력)'), methIn),
+          h('label', { class: 'f' }, h('span', null, '세트법 (목록에서 고르거나 직접 입력)'), sug(methIn, 'methodlist')),
           h('label', { class: 'f' }, h('span', null, '세트별 상세 (드롭·피라미드 등)'), detIn),
           h('div', { class: 'muted', style: 'grid-column: 1 / -1' }, '세트마다 중량x횟수를 쉼표로 이어 적으면 운동량 계산에 그대로 써요. 예: 50x8, 40x8, 30x10 (x 대신 ×, * 도 돼요)')));
       if (it.detail || (it.method && !rn)) mdet.open = true;
@@ -2341,7 +2364,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
             var removed = s.items.splice(i, 1)[0]; touch(m, 'log'); renderDetail();
             toast('운동을 삭제했어요', function () { s.items.splice(i, 0, removed); touch(m, 'log'); renderDetail(); });
           } }, '✕')),
-        h('div', { class: 'itemgrid' }, h('label', { class: 'f' }, h('span', null, '부위'), partIn), exLab, nf('중량(kg)', 'load'), nf('횟수', 'reps'), nf('세트', 'sets'), nf('휴식', 'rest', { text: true, ph: '예: 60초' })),
+        h('div', { class: 'itemgrid' }, h('label', { class: 'f' }, h('span', null, '부위'), sug(partIn, 'partlist')), exLab, nf('중량(kg)', 'load'), nf('횟수', 'reps'), nf('세트', 'sets'), nf('휴식', 'rest', { text: true, ph: '예: 60초' })),
         rn && !rn.last ? h('div', { class: 'muted hint' }, '묶음 안에서는 쉬지 않고 이어서 해요. 휴식은 묶음의 마지막 운동에 적어요.') : null,
         cardRpe,
         mdet,
@@ -2452,7 +2475,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         g.rows.forEach(function (r) { r.item.ex = nn; });
         state.exSel[m.id] = exKey(nn); touch(m, 'log'); renderDetail();
       } });
-    var partIn = h('input', { class: 'in', type: 'text', list: 'partlist', value: g.part || '', placeholder: '부위', autocomplete: 'off', 'aria-label': '부위',
+    var partIn = h('input', { class: 'in', type: 'text', value: g.part || '', placeholder: '부위', autocomplete: 'off', 'aria-label': '부위',
       onChange: function (e) { var p = normName(e.target.value); g.rows.forEach(function (r) { r.item.part = p; }); touch(m, 'log'); renderDetail(); } });
     var hist = g.rows.slice().reverse();
     var tbody = h('tbody');
@@ -2466,7 +2489,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     });
     var dcard = card(g.name + ' 변화', '이름이나 부위를 고치면 같은 운동의 기록 전체에 적용돼요. 다른 운동과 같은 이름으로 바꾸면 합쳐져요.',
       h('div', { class: 'fgrid', style: 'margin-bottom:12px' },
-        h('label', { class: 'f' }, h('span', null, '운동 이름'), rename), h('label', { class: 'f' }, h('span', null, '부위'), partIn)),
+        h('label', { class: 'f' }, h('span', null, '운동 이름'), rename), h('label', { class: 'f' }, h('span', null, '부위'), sug(partIn, 'partlist'))),
       chartBox,
       h('div', { class: 'tblwrap', style: 'margin-top:12px' }, h('table', { class: 'grid', style: 'min-width:720px' },
         h('thead', null, h('tr', null, ['회차', '날짜', '중량', '횟수', '세트', '휴식', '세트법', '피드백'].map(function (t) { return h('th', null, t); }), h('th', { class: 'ctl' }, ''))), tbody)));
@@ -2959,7 +2982,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         function upd() { var e = est1rm(r.load, r.reps); out.textContent = isFinite(e) ? '추정 1RM ' + fmtN(e) + 'kg' : (String(r.reps).trim() && num(r.reps) > 12 ? '12회 넘게 하면 계산이 부정확해요' : '중량과 횟수를 넣어 주세요'); }
         box.append(h('div', { class: 'arow' },
           h('div', { class: 'top' },
-            h('input', { class: 'in', type: 'text', list: 'exlist', value: r.ex, placeholder: '운동 (예: 스쿼트)', 'aria-label': '운동', autocomplete: 'off', onInput: function (e) { r.ex = e.target.value; touch(m); } }),
+            h('input', { class: 'in', type: 'text', value: r.ex, placeholder: '운동 (예: 스쿼트)', 'aria-label': '운동', autocomplete: 'off', onInput: function (e) { r.ex = e.target.value; touch(m); } }),
             h('button', { class: 'ib', type: 'button', 'aria-label': '삭제', onClick: function () {
               var i = o.rm.indexOf(r); if (i < 0) return; o.rm.splice(i, 1); touch(m); paintR();
               toast('측정 기록을 지웠어요', function () { o.rm.splice(i, 0, r); touch(m); paintR(); });
@@ -3906,7 +3929,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         else { c.strokeStyle = o.c; c.lineWidth = o.w; c.beginPath(); c.moveTo(o.x1, o.y1 + 0.5); c.lineTo(o.x2, o.y2 + 0.5); c.stroke(); }
       });
       c.font = '400 20px ' + EXP_FONT; c.fillStyle = L.sub;
-      c.fillText('스포차트', L.M, L.H - 80);
+      c.fillText('회원 노트', L.M, L.H - 80);
       var pn = (pi + 1) + ' / ' + n; c.fillText(pn, L.W - L.M - c.measureText(pn).width, L.H - 80);
       jobs.push(new Promise(function (res, rej) {
         cv.toBlob(function (bl) { if (!bl) return rej(new Error('canvas')); bl.arrayBuffer().then(function (ab) { res({ data: new Uint8Array(ab), w: L.W, h: L.H }); }, rej); }, 'image/jpeg', 0.92);
@@ -4306,7 +4329,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
 /* ===================== standalone adapter (Firebase) ===================== */
 var CFG = window.SPO_FIREBASE, FB = window.firebase;
-var CONSENT_VER = '2026-10-01', APP_VER = '2026-10-06', APP_NAME = '스포차트';
+var CONSENT_VER = '2026-10-01', APP_VER = '2026-10-06', APP_NAME = '회원 노트';
 var SPO = window.SPO = {};
 /* 공지: 문구를 바꾸고 NOTICE_ID를 새 값으로 바꾸면, 닫았던 사람에게도 다시 보여요. */
 var NOTICE_ID = 'beta-1';
