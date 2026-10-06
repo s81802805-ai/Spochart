@@ -584,7 +584,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
 
   /* ---------- data model ---------- */
-  var PROFILE_KEYS = ['sexAge', 'job', 'bodyStat', 'career', 'freq', 'period', 'route', 'notion', 'history', 'pain', 'caution', 'meds', 'sleep', 'diet', 'activity', 'cycle', 'goalType', 'reason', 'likes', 'dislikes', 'prevExp', 'memo'];
+  var PROFILE_KEYS = ['sexAge', 'job', 'bodyStat', 'career', 'freq', 'period', 'route', 'notion', 'history', 'pain', 'caution', 'meds', 'sleep', 'diet', 'drink', 'activity', 'cycle', 'goalType', 'reason', 'likes', 'dislikes', 'prevExp', 'memo'];
   var DAYS = ['월', '화', '수', '목', '금', '토', '일'];
   var DAY_ROWS = [['done', '수업 완료 (O/X)'], ['self', '셀프 운동 (O/X)'], ['cond', '컨디션 (0~10)'], ['pain', '통증 (0~10)'], ['sleep', '수면 (시간)'], ['meal', '식사·물']];
   var EX_COLS = [
@@ -1193,7 +1193,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       editTable(m, { id: 'goals', rows: m.goals, cols: GOAL_COLS, blank: blankGoal }),
       h('div', { class: 'fgrid', style: 'margin-top:12px' }, fld(m, p, 'goalType', '목표 유형 (다이어트, 근비대, 재활, 자세교정 등)', { wide: true }))));
     box.append(fold('생활 패턴', null, h('div', { class: 'fgrid' },
-      fld(m, p, 'sleep', '수면 · 스트레스', { ta: true }), fld(m, p, 'diet', '식사 패턴', { ta: true }), fld(m, p, 'activity', '일상 활동량', { ta: true }))));
+      fld(m, p, 'sleep', '수면 · 스트레스', { ta: true }), fld(m, p, 'diet', '식사 패턴', { ta: true }), fld(m, p, 'drink', '음주 (빈도 · 양 · 술 종류)', { ta: true }), fld(m, p, 'activity', '일상 활동량', { ta: true }))));
     box.append(fold('회원 이야기', null, h('div', { class: 'fgrid' },
       fld(m, p, 'reason', '목표의 이유', { ta: true }), fld(m, p, 'likes', '좋아하는 운동', { ta: true }),
       fld(m, p, 'dislikes', '싫어하는 것 · 불안', { ta: true }), fld(m, p, 'prevExp', '이전 운동 경험', { ta: true }),
@@ -2511,8 +2511,8 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
 
 
   /* ---------- 등록 · 결제 · 서비스 PT, 이번 달 ---------- */
-  var METHODS = [['card', '카드'], ['cash', '현금'], ['bank', '계좌']];
-  function methodName(k) { var f = METHODS.filter(function (x) { return x[0] === k; })[0]; return f ? f[1] : ''; }
+  var PAY_METHODS = [['card', '카드'], ['cash', '현금'], ['bank', '계좌']];
+  function methodName(k) { var f = PAY_METHODS.filter(function (x) { return x[0] === k; })[0]; return f ? f[1] : ''; }
   function won(n) { n = Math.round(Number(n) || 0); return (n < 0 ? '−' : '') + Math.abs(n).toLocaleString('ko-KR') + '원'; }
   function usage(m) {
     var paid = 0, svc = 0, up = 0, us = 0;
@@ -2555,7 +2555,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     var wrap = h('div', { class: 'chips' });
     function paint() {
       wrap.replaceChildren();
-      METHODS.forEach(function (x) { wrap.append(h('button', { class: 'chip big' + (obj.method === x[0] ? ' on' : ''), type: 'button', onClick: function () { obj.method = x[0]; paint(); after(); } }, x[1])); });
+      PAY_METHODS.forEach(function (x) { wrap.append(h('button', { class: 'chip big' + (obj.method === x[0] ? ' on' : ''), type: 'button', onClick: function () { obj.method = x[0]; paint(); after(); } }, x[1])); });
     }
     paint();
     return h('div', { class: 'f' }, h('span', null, '결제수단'), wrap);
@@ -2932,7 +2932,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     box.append(otSec(m, 'why', '3. 등록 계기 · 고민', [{ o: p, k: 'reason', label: '등록 계기 · 목표의 이유 (회원 말 그대로)', wide: true }]));
     box.append(otSec(m, 'exp', '4. 운동 경험 · 취향', [{ o: p, k: 'prevExp', label: '이전 운동 경험' }, { o: p, k: 'likes', label: '좋아하는 운동' }, { o: p, k: 'dislikes', label: '싫어하는 것 · 불안' }]));
     box.append(otSec(m, 'med', '5. 병력 · 통증 · 주의 사항 (내부용)', [{ o: p, k: 'history', label: '병력 · 수술력' }, { o: p, k: 'pain', label: '현재 통증' }, { o: p, k: 'caution', label: '금기 · 주의 동작' }, { o: p, k: 'meds', label: '복용 약 · 기타' }]));
-    box.append(otSec(m, 'life', '6. 생활 패턴', [{ o: p, k: 'sleep', label: '수면 · 스트레스' }, { o: p, k: 'diet', label: '식사 패턴' }, { o: p, k: 'activity', label: '일상 활동량' }]));
+    box.append(otSec(m, 'life', '6. 생활 패턴', [{ o: p, k: 'sleep', label: '수면 · 스트레스' }, { o: p, k: 'diet', label: '식사 패턴' }, { o: p, k: 'drink', label: '음주 (빈도 · 양 · 술 종류)' }, { o: p, k: 'activity', label: '일상 활동량' }]));
     box.append(otSec(m, 'hesi', '7. 망설이는 점 · 메모 (내부용)', [{ o: o, k: 'concern', label: '망설이는 점 (비용 · 시간 등) — 회원에게 보이지 않아요', wide: true }, { o: p, k: 'memo', label: '메모', wide: true }]));
     box.append(h('div', { class: 'footrow' }, dangerBtn('이 회원 삭제', function () { purgePhotos(m); removeMember(m.id); toast('회원을 삭제했어요'); })));
     return box;
@@ -3096,7 +3096,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
     if (!hasAny) return null;
     var info = kvRows([['OT 날짜', fmtD(o.date)], ['목표', goalLine(m)]]);
     if (info.length) B.push({ t: 'kv', rows: info });
-    var talk = kvRows([['등록 계기 · 고민', p.reason], ['운동 경험', p.prevExp], ['좋아하는 운동', p.likes], ['수면 · 스트레스', p.sleep], ['식사 패턴', p.diet], ['일상 활동량', p.activity]].concat(state.expInternal ? [['망설이는 점 (내부)', o.concern], ['병력 · 수술력 (내부)', p.history], ['현재 통증 (내부)', p.pain]] : []));
+    var talk = kvRows([['등록 계기 · 고민', p.reason], ['운동 경험', p.prevExp], ['좋아하는 운동', p.likes], ['수면 · 스트레스', p.sleep], ['식사 패턴', p.diet], ['음주', p.drink], ['일상 활동량', p.activity]].concat(state.expInternal ? [['망설이는 점 (내부)', o.concern], ['병력 · 수술력 (내부)', p.history], ['현재 통증 (내부)', p.pain]] : []));
     if (talk.length) { B.push({ t: 'h1', text: '상담에서 나눈 이야기' }); B.push({ t: 'kv', rows: talk }); }
     var as = o.assess.filter(function (a) { return a.item && (a.level || a.note); }).map(function (a) { return [a.item, levelName(a.level) || '–', a.note]; });
     if (as.length) { B.push({ t: 'h1', text: '움직임 평가' }); B.push(exTable(['항목', '결과', '코멘트'], as, [2, 1.2, 4])); }
@@ -3648,7 +3648,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       if (goals.length) B.push(exTable(['목표 항목', '현재', '목표치', '설정일', '기한'], goals, [3, 1.4, 1.4, 1.5, 1.4]));
       if (p.goalType) B.push({ t: 'kv', rows: [['목표 유형', p.goalType]] });
     }
-    var life = kvRows([['수면 · 스트레스', p.sleep], ['식사 패턴', p.diet], ['일상 활동량', p.activity]]);
+    var life = kvRows([['수면 · 스트레스', p.sleep], ['식사 패턴', p.diet], ['음주', p.drink], ['일상 활동량', p.activity]]);
     if (life.length) { B.push({ t: 'h1', text: '생활 패턴' }); B.push({ t: 'kv', rows: life }); }
     var story = kvRows([['목표의 이유', p.reason], ['좋아하는 운동', p.likes], ['싫어하는 것 · 불안', p.dislikes], ['이전 운동 경험', p.prevExp]].concat(internal ? [['메모', p.memo]] : []));
     if (story.length) { B.push({ t: 'h1', text: '회원 이야기' }); B.push({ t: 'kv', rows: story }); }
