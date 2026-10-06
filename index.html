@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><meta name="apple-mobile-web-app-capable" content="yes"><title>회원 노트</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><meta name="apple-mobile-web-app-capable" content="yes"><title>스포차트</title>
 <style>:root{color-scheme:light;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -519,7 +519,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
 
 <div class="app">
   <header class="topbar">
-    <div class="brand" id="brand" role="button" tabindex="0" title="처음 화면으로">회원 노트</div>
+    <div class="brand" id="brand" role="button" tabindex="0" title="처음 화면으로">스포차트</div>
     <button class="pill warn" id="status" type="button">연결 중…</button>
     <button class="btn" id="toggleList" type="button" aria-pressed="false">목록 숨기기</button>
     <button class="btn" id="openMonth" type="button">매출 · 수업</button>
@@ -3929,7 +3929,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
         else { c.strokeStyle = o.c; c.lineWidth = o.w; c.beginPath(); c.moveTo(o.x1, o.y1 + 0.5); c.lineTo(o.x2, o.y2 + 0.5); c.stroke(); }
       });
       c.font = '400 20px ' + EXP_FONT; c.fillStyle = L.sub;
-      c.fillText('회원 노트', L.M, L.H - 80);
+      c.fillText('스포차트', L.M, L.H - 80);
       var pn = (pi + 1) + ' / ' + n; c.fillText(pn, L.W - L.M - c.measureText(pn).width, L.H - 80);
       jobs.push(new Promise(function (res, rej) {
         cv.toBlob(function (bl) { if (!bl) return rej(new Error('canvas')); bl.arrayBuffer().then(function (ab) { res({ data: new Uint8Array(ab), w: L.W, h: L.H }); }, rej); }, 'image/jpeg', 0.92);
@@ -4329,7 +4329,7 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
   }
 /* ===================== standalone adapter (Firebase) ===================== */
 var CFG = window.SPO_FIREBASE, FB = window.firebase;
-var CONSENT_VER = '2026-10-01', APP_VER = '2026-10-06', APP_NAME = '회원 노트';
+var CONSENT_VER = '2026-10-01', APP_VER = '2026-10-06', APP_NAME = '스포차트';
 var SPO = window.SPO = {};
 /* 공지: 문구를 바꾸고 NOTICE_ID를 새 값으로 바꾸면, 닫았던 사람에게도 다시 보여요. */
 var NOTICE_ID = 'beta-1';
