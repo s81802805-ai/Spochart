@@ -474,7 +474,7 @@ table.grid td.r, table.grid th.r { text-align: right; }
 .sugb{flex:none;width:40px;height:44px;border:1px solid var(--line);background:var(--panel);color:var(--ink2);border-radius:10px;font-size:14px;cursor:pointer;padding:0}
 .sugp{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:40;display:flex;flex-direction:column;max-height:260px;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:4px}
 .sugc{border:0;background:none;color:inherit;text-align:left;padding:12px 14px;font-size:15px;border-radius:8px;cursor:pointer;min-height:44px}
-.sugc:active,.sugc:hover{background:var(--accent-soft)}
+.sugc:active,.sugc:hover,.sugc.on{background:var(--accent-soft)}.sugc.on{font-weight:700}
 .sugn{font-size:13px;color:var(--ink3);padding:12px 14px}.sugp[hidden]{display:none}
 .gate { position: fixed; inset: 0; z-index: 90; background: var(--bg); display: grid; place-items: start center; padding: 24px 16px; overflow: auto; }
 .gatebox { width: min(100%, 440px); background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: grid; gap: 14px; margin-block: 4vh; }
@@ -1982,10 +1982,9 @@ body.ro #detail input, body.ro #detail textarea, body.ro #detail select { pointe
       var dl = document.getElementById(listId), vals = dl ? Array.prototype.map.call(dl.options, function (o) { return o.value; }) : [];
       panel.textContent = '';
       if (!vals.length) panel.append(h('span', { class: 'sugn' }, '아직 목록이 없어요'));
-      var q = String(input.value || '').trim();
-      if (q) { var f = vals.filter(function (v) { return v.indexOf(q) >= 0; }); if (f.length) vals = f; }
+      var cur = String(input.value || '').trim();
       vals.forEach(function (v) {
-        panel.append(h('button', { class: 'sugc', type: 'button', onClick: function () {
+        panel.append(h('button', { class: 'sugc' + (v === cur ? ' on' : ''), type: 'button', onClick: function () {
           input.value = v; input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new Event('change', { bubbles: true }));
           panel.hidden = true;
         } }, v));
